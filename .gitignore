@@ -236,6 +236,7 @@ README.html
 .exercism
 
 notas.txt
-/postgres_data
+/postgres_data_users
+/postgres_data_tasks
 pgadmin_data/
 uploads/

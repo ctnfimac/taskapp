@@ -1,0 +1,13 @@
+server:
+  port: 8092
+spring:
+  application:
+    name: microservice-tasks
+  datasource:
+    driver-class-name: com.postgresql.Driver
+    url: jdbc:postgresql://localhost:5436/tasksDb
+    username: admintask
+    password: admintask123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
