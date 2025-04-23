@@ -14,6 +14,7 @@ services:
       - "5435:5432"
     volumes:
       - ./postgres_data_users:/var/lib/postgresql/data/
+      - ./init-scripts/userdb-init.sql:/docker-entrypoint-initdb.d/userdb-init.sql
 
   taskdb:
     image: postgres
@@ -27,6 +28,8 @@ services:
       - "5436:5432"
     volumes:
       - ./postgres_data_tasks:/var/lib/postgresql/data/
+      - ./init-scripts/taskdb-init.sql:/docker-entrypoint-initdb.d/taskdb-init.sql
+
 
 
   # cliente de base de datos si es que no quiero usar la linea de comandos
