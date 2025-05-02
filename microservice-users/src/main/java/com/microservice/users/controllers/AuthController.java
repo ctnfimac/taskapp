@@ -1,6 +1,8 @@
 package com.microservice.users.controllers;
 
+import com.microservice.users.dtos.auth.RequestAuthLoginDto;
 import com.microservice.users.dtos.auth.RequestAuthRegisterDto;
+import com.microservice.users.dtos.auth.ResponseAuthLoginDto;
 import com.microservice.users.dtos.auth.ResponseAuthRegisterDto;
 import com.microservice.users.entities.UserEntity;
 import com.microservice.users.mappers.AuthMapper;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -33,4 +37,17 @@ public class AuthController {
         ResponseAuthRegisterDto responseAuthRegisterDto = authMapper.userEntityToResponseAuthRegisterDto(userCreated);
         return new ResponseEntity<>(responseAuthRegisterDto, HttpStatus.CREATED);
     }
+
+
+    @PostMapping("login")
+    public ResponseEntity<?> login(@Validated @RequestBody RequestAuthLoginDto requestAuthLoginDto){
+        UserEntity userEntity = authMapper.requestAuthLoginDtoToUserEntity(requestAuthLoginDto);
+        UserEntity user = authService.login(userEntity);
+        ResponseAuthLoginDto responseAuthLoginDto = authMapper.userEntityToResponseAuthLoginDto(user);
+        return user != null ?
+                new ResponseEntity<>(responseAuthLoginDto, HttpStatus.OK):
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas"));
+    }
+
+
 }

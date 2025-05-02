@@ -15,4 +15,12 @@ public class AuthServiceImpl implements AuthService{
     public UserEntity register(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }
+
+    @Override
+    public UserEntity login(UserEntity userEntity) {
+        return userRepository.getUserEntityByEmailAndPassword(
+                userEntity.getEmail(),
+                userEntity.getPassword()
+        );
+    }
 }
