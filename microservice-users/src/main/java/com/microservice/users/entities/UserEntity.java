@@ -19,11 +19,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String username;
-
     @Column(nullable = false, length = 30)
     private String email;
+
+    @Column(nullable = false, length = 50)
+    private String password;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
