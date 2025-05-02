@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity<ResponseAuthRegisterDto> register(@Validated @RequestBody RequestAuthRegisterDto requestAuthRegister){
-        UserEntity userEntity = authMapper.requestAuthRequestDtoToUserEntity(requestAuthRegister);
+        UserEntity userEntity = authMapper.requestAuthRegisterDtoToUserEntity(requestAuthRegister);
         UserEntity userCreated = authService.register(userEntity);
         ResponseAuthRegisterDto responseAuthRegisterDto = authMapper.userEntityToResponseAuthRegisterDto(userCreated);
         return new ResponseEntity<>(responseAuthRegisterDto, HttpStatus.CREATED);

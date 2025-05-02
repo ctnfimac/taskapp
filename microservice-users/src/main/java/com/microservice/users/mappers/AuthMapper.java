@@ -12,7 +12,7 @@ import org.mapstruct.MappingConstants;
 public interface AuthMapper {
 
     // para el registro de usuarios
-    UserEntity requestAuthRequestDtoToUserEntity(RequestAuthRegisterDto requestAuthRegisterDto);
+    UserEntity requestAuthRegisterDtoToUserEntity(RequestAuthRegisterDto requestAuthRegisterDto);
     ResponseAuthRegisterDto userEntityToResponseAuthRegisterDto(UserEntity userEntity);
 
     // para el login de usuarios
