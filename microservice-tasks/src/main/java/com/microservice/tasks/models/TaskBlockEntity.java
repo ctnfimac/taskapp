@@ -9,18 +9,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task_block")
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskEntity {
+public class TaskBlockEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "title no puede estar vacio")
     private String title;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
@@ -34,8 +34,6 @@ public class TaskEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "task_block_id", referencedColumnName = "id")
-    private TaskBlockEntity taskBlockEntity;
-
+    @Column(nullable = false, name = "user_id")
+    private Integer userId;
 }
