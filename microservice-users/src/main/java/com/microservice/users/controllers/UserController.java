@@ -28,21 +28,21 @@ public class UserController {
     private final UserMapper userMapper;
 
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll(){
         List<UserEntity> listUsers = userService.getAll();
         return new ResponseEntity<>(
                 listUsers.stream().map(userMapper::userEntityToUserResponseDto).toList(),
                 HttpStatus.OK);
     }
-
+*/
     @GetMapping("{id}")
     public ResponseEntity<UserResponseDto> getById(@PathVariable("id") Long id){
         return userService.getById(id)
                 .map( user -> new ResponseEntity<>(userMapper.userEntityToUserResponseDto(user), HttpStatus.OK))
                 .orElse( new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+/*
     @PostMapping
     public ResponseEntity<UserResponseDto> create(@Validated @RequestBody UserRequestCreateDto userRequestCreateDto){
         UserEntity userEntity = userMapper.userRequestCreateDtoToUserEntity(userRequestCreateDto);
@@ -67,5 +67,5 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND):
                 new ResponseEntity<>(userMapper.userEntityToUserResponseDto(userUpdated), HttpStatus.OK);
 
-    }
+    }*/
 }

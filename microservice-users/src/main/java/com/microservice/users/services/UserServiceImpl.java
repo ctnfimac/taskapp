@@ -14,16 +14,16 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
-    @Override
+    /*@Override
     public List<UserEntity> getAll() {
         return userRepository.findAll();
-    }
+    }*/
 
     @Override
     public Optional<UserEntity> getById(Long id) {
         return userRepository.findById(id);
     }
-
+/*
     @Override
     public UserEntity create(UserEntity user) {
         return userRepository.save(user);
@@ -47,5 +47,5 @@ public class UserServiceImpl implements UserService{
             return true;
         }
         return false;
-    }
+    }*/
 }

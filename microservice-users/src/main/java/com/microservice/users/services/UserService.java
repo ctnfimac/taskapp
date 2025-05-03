@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    List<UserEntity> getAll();
+    //List<UserEntity> getAll();
     Optional<UserEntity> getById(Long id);
-    UserEntity create(UserEntity user);
+    /*UserEntity create(UserEntity user);
     UserEntity update(Long id, UserEntity user);
-    boolean delete(Long id);
+    boolean delete(Long id);*/
 }

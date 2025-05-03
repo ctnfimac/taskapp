@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 public class UserResponseDto {
     private Integer id;
-    private String username;
+    //private String username;
     private String email;
-    private LocalDateTime createdAt;
+    //private LocalDateTime createdAt;
 }
