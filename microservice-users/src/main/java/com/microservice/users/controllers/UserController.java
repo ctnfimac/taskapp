@@ -40,7 +40,9 @@ public class UserController {
     public ResponseEntity<UserResponseDto> getById(@PathVariable("id") Long id){
         return userService.getById(id)
                 .map( user -> new ResponseEntity<>(userMapper.userEntityToUserResponseDto(user), HttpStatus.OK))
-                .orElse( new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse( new ResponseEntity<>(null, HttpStatus.NO_CONTENT));
+
+
     }
 /*
     @PostMapping

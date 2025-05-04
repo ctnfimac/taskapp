@@ -13,6 +13,6 @@ public class UserRequestCreateDto {
     private String username;
 
     @NotBlank
-    @Length(max = 30)
-    private String email;
+    @Length(max = 50)
+    private String password;
 }

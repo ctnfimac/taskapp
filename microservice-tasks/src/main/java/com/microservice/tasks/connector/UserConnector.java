@@ -33,7 +33,7 @@ public class UserConnector {
     }
 
     @CircuitBreaker(name = "api-users", fallbackMethod = "fallbackGetUser")
-    public UserDTO getUser(Integer userId) {
+    public UserDTO getUser(Long userId) {
         System.out.println("Calling to api de users");
         HostConfig hostConfig = configuration.getHosts().get(HOST);
         EndpointConfig endpointConfig = hostConfig.getEndpoints().get(ENDPOINT);
@@ -62,13 +62,13 @@ public class UserConnector {
 
     }
 
-    public UserDTO fallbackGetUser(Integer userId, CallNotPermittedException ex) {
+    public UserDTO fallbackGetUser(Long userId, CallNotPermittedException ex) {
         System.out.println("calling to fallbackGetUser-1");
 
         return new UserDTO();
     }
 
-    public UserDTO fallbackGetUser(Integer userId, Exception ex) {
+    public UserDTO fallbackGetUser(Long userId, Exception ex) {
         System.out.println("calling to fallbackGetUser-2");
 
         throw new RuntimeException();

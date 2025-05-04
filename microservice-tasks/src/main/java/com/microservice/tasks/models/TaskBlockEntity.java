@@ -35,5 +35,10 @@ public class TaskBlockEntity {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false, name = "user_id")
-    private Integer userId;
+    private Long userId;
+
+    @PrePersist
+    public void prePersist() {
+        if (done == null) done = false;
+    }
 }
