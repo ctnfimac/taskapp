@@ -1,20 +1,21 @@
 package com.microservice.tasks.controllers;
 
 
+import com.microservice.tasks.dto.task.TaskRequestCreate;
+import com.microservice.tasks.dto.task.TaskResponseCreate;
 import com.microservice.tasks.dto.taskblock.RequestCreateTaskBlockDTO;
 import com.microservice.tasks.dto.taskblock.ResponseCreateTaskBlockDTO;
 import com.microservice.tasks.mappers.TaskBlockMapper;
+import com.microservice.tasks.mappers.TaskMapper;
 import com.microservice.tasks.models.TaskBlockEntity;
+import com.microservice.tasks.models.TaskEntity;
 import com.microservice.tasks.services.TaskBlockService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/block")
@@ -25,6 +26,7 @@ public class TaskBlockController {
     private TaskBlockService taskBlockService;
 
     private TaskBlockMapper taskBlockMapper;
+    private TaskMapper taskMapper;
 
     @PostMapping
     public ResponseEntity<ResponseCreateTaskBlockDTO> create(@RequestBody @Valid RequestCreateTaskBlockDTO requestCreateTaskBlockDTO){
@@ -32,6 +34,15 @@ public class TaskBlockController {
         TaskBlockEntity taskBlockCreated = taskBlockService.create(taskBlockEntity);
         return new ResponseEntity<>(
                 taskBlockMapper.taskBlockEntityToResponseCreateTaskBlockDTO(taskBlockCreated),
+                HttpStatus.CREATED);
+    }
+
+    @PostMapping("{block_id}/task")
+    public ResponseEntity<TaskResponseCreate> createTask(@PathVariable("block_id") Long blockId,
+                                                         @RequestBody @Valid TaskRequestCreate taskRequestCreate){
+        TaskEntity taskCreated = taskBlockService.createTask(blockId, taskRequestCreate);
+        return new ResponseEntity<>(
+                taskMapper.taskEntityToTaskResponseCreate(taskCreated),
                 HttpStatus.CREATED);
     }
 }

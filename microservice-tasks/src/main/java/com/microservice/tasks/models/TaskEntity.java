@@ -38,4 +38,9 @@ public class TaskEntity {
     @JoinColumn(name = "task_block_id", referencedColumnName = "id")
     private TaskBlockEntity taskBlockEntity;
 
+    @PrePersist
+    public void prePersist(){
+        if(done == null) done = false;
+    }
+
 }

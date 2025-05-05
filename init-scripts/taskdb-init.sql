@@ -16,5 +16,5 @@ CREATE TABLE tasks(
 	created_at timestamp,
 	updated_at timestamp,
 	task_block_id int not null,
-	CONSTRAINT fk_tasks_taskblock FOREIGN KEY(task_block_id) REFERENCES task_block(id),
+	CONSTRAINT fk_tasks_taskblock FOREIGN KEY(task_block_id) REFERENCES task_block(id)
 );
