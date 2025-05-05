@@ -45,4 +45,11 @@ public class TaskBlockController {
                 taskMapper.taskEntityToTaskResponseCreate(taskCreated),
                 HttpStatus.CREATED);
     }
+
+    @DeleteMapping("{blockId}/task/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable("blockId") Long blockId,
+                                           @PathVariable("taskId") Long taskId){
+        taskBlockService.deleteTask(blockId, taskId);
+        return ResponseEntity.noContent().build();
+    }
 }

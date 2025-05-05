@@ -11,7 +11,8 @@ public enum APIError {
     USER_WITH_SAME_ID(HttpStatus.BAD_REQUEST, "There is a user with the same id"),
     EXCEED_NUMBER_OPERATIONS(HttpStatus.TOO_MANY_REQUESTS, "You exceed the number of operations"),
     TASK_BLOCK_ACTIVE(HttpStatus.BAD_REQUEST, "there is an active task block"),
-    USER_DIFFERENT(HttpStatus.NOT_FOUND, "Difference between users based on the entered data"),;
+    USER_DIFFERENT(HttpStatus.NOT_FOUND, "Difference between users based on the entered data"),
+    TASK_NOT_FOUND(HttpStatus.NOT_FOUND, "Task not found"),;
 
     private final HttpStatus httpStatus;
     private final String message;

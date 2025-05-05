@@ -7,4 +7,5 @@ import com.microservice.tasks.models.TaskEntity;
 public interface TaskBlockService {
     TaskBlockEntity create(TaskBlockEntity taskBlockEntity);
     TaskEntity createTask(Long blockId, TaskRequestCreate taskRequestCreate);
+    void deleteTask(Long blockId, Long taskId);
 }

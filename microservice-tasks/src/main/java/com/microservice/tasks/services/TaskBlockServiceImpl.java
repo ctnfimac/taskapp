@@ -64,6 +64,29 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         return taskRepository.save(task);
     }
 
+    @Override
+    public void deleteTask(Long blockId, Long taskId) {
+        // verifico que el bloque de tareas exista y no este finalizado
+        TaskBlockEntity taskBlock = taskBlockRepository.findById(blockId)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_FOUND));
+
+        if(taskBlock.getDone()){
+            throw new GlobalTaskException(APIError.TASK_BLOCK_FINISHED);
+        }
+
+        // verifico que exista la tarea del bloque
+        TaskEntity task = taskRepository.findByIdAndTaskBlockEntity(taskId, taskBlock)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_NOT_FOUND));
+
+        // TODO tendría que corroborar la veracidad del usuario, esto podría hacerse con tokens
+
+        // verifico que el usuario existe en el microservicio de usuarios
+        checkUserExistsById(taskBlock.getUserId());
+
+        //elimino el usuario
+        taskRepository.delete(task);
+    }
+
     private void checkUserExists(TaskBlockEntity taskBlockEntity){
         UserDTO user = userConnector.getUser(taskBlockEntity.getUserId());
         if(user == null)
