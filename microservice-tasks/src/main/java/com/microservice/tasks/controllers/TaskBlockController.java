@@ -4,7 +4,9 @@ package com.microservice.tasks.controllers;
 import com.microservice.tasks.dto.task.TaskRequestCreate;
 import com.microservice.tasks.dto.task.TaskResponseCreate;
 import com.microservice.tasks.dto.taskblock.RequestCreateTaskBlockDTO;
+import com.microservice.tasks.dto.taskblock.RequestUpdateDoneTaskBlockDTO;
 import com.microservice.tasks.dto.taskblock.ResponseCreateTaskBlockDTO;
+import com.microservice.tasks.dto.taskblock.ResponseUpdateDoneTaskBlockDTO;
 import com.microservice.tasks.mappers.TaskBlockMapper;
 import com.microservice.tasks.mappers.TaskMapper;
 import com.microservice.tasks.models.TaskBlockEntity;
@@ -51,5 +53,15 @@ public class TaskBlockController {
                                            @PathVariable("taskId") Long taskId){
         taskBlockService.deleteTask(blockId, taskId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("{blockId}/finish")
+    public ResponseEntity<ResponseUpdateDoneTaskBlockDTO> finishTaskBlock(@PathVariable Long blockId,
+                                                                          @RequestBody RequestUpdateDoneTaskBlockDTO taskBlockDTO){
+        TaskBlockEntity taskBlock = taskBlockService.setDoneTrue(blockId, taskBlockDTO);
+        return new ResponseEntity<>(
+                taskBlockMapper.taskBlockEntityToResponseUpdateDoneTaskBlockDTO(taskBlock),
+                HttpStatus.OK
+        );
     }
 }
