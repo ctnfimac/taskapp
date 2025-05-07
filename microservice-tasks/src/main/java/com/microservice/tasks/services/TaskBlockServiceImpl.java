@@ -100,9 +100,7 @@ public class TaskBlockServiceImpl implements TaskBlockService{
 
     @Override
     public List<TaskBlockEntity> getAllByUserId(Long userId) {
-        return taskBlockRepository.findByUserId(userId);/*.stream()
-                .map(taskBlockMapper::taskBlockEntityToResponseTaskBlockDTO)
-                .toList();*/
+        return taskBlockRepository.findByUserIdAndDoneTrue(userId);
     }
 
     /**
