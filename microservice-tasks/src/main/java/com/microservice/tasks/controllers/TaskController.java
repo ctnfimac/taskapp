@@ -2,6 +2,7 @@ package com.microservice.tasks.controllers;
 
 import com.microservice.tasks.dto.task.TaskRequestCreate;
 import com.microservice.tasks.dto.task.TaskRequestUpdateDone;
+import com.microservice.tasks.dto.task.TaskResponseDTO;
 import com.microservice.tasks.dto.task.TaskResponseUpdateDone;
 import com.microservice.tasks.mappers.TaskMapper;
 import com.microservice.tasks.models.TaskEntity;
@@ -32,5 +33,13 @@ public class TaskController {
                                                                  @RequestBody @Valid TaskRequestUpdateDone taskRequestUpdateDone){
         TaskEntity taskEntity = taskService.toogleDoneTask(taskId, taskRequestUpdateDone);
         return new ResponseEntity<>(taskMapper.taskEntityToTaskResponseUpdateDone(taskEntity), HttpStatus.OK);
+    }
+
+    @GetMapping("{blockId}/{userId}")
+    public ResponseEntity<List<TaskResponseDTO>> getTaskByUser(@PathVariable Long blockId, @PathVariable Long userId){
+        List<TaskResponseDTO> taskResponseDTOS = taskService.findByUserAndBLock(userId, blockId).stream()
+                .map(taskMapper::taskEntityToTaskResponseDTO)
+                .toList();
+        return new ResponseEntity<>(taskResponseDTOS, HttpStatus.OK);
     }
 }

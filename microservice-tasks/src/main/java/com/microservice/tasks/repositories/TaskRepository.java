@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
+import java.util.List;
 
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     Optional<TaskEntity> findByIdAndTaskBlockEntity(Long taskId, TaskBlockEntity taskBlockEntity);
@@ -21,5 +22,15 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
         )
     """)
     Optional<TaskBlockEntity> findByBlockIdAndAllTasksDone(@Param("blockId") Long blockId);
+
+
+    @Query("""
+        SELECT t
+        FROM TaskEntity t
+        WHERE t.taskBlockEntity.id = :blockId
+        AND t.taskBlockEntity.userId = :userId
+        AND t.taskBlockEntity.done = true
+    """)
+    List<TaskEntity> findTasksByBlockFinishedAndIdUserId(@Param("userId") Long userId, @Param("blockId") Long blockId);
 
 }

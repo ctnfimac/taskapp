@@ -1,6 +1,7 @@
 package com.microservice.tasks.mappers;
 
 import com.microservice.tasks.dto.task.TaskResponseCreate;
+import com.microservice.tasks.dto.task.TaskResponseDTO;
 import com.microservice.tasks.dto.task.TaskResponseUpdateDone;
 import com.microservice.tasks.models.TaskEntity;
 import org.mapstruct.Mapper;
@@ -15,4 +16,6 @@ public interface TaskMapper {
     @Mapping(source = "title", target= "title")
     @Mapping(source = "done", target= "done")
     TaskResponseUpdateDone taskEntityToTaskResponseUpdateDone(TaskEntity taskEntity);
+
+    TaskResponseDTO taskEntityToTaskResponseDTO(TaskEntity taskEntity);
 }

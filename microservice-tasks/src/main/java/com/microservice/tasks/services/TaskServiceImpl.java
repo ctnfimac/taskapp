@@ -12,6 +12,8 @@ import com.microservice.tasks.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -40,6 +42,11 @@ public class TaskServiceImpl implements TaskService{
         task.setDone(!task.getDone());
         taskRepository.save(task);
         return task;
+    }
+
+    @Override
+    public List<TaskEntity> findByUserAndBLock(Long userId, Long blockId) {
+        return taskRepository.findTasksByBlockFinishedAndIdUserId(userId, blockId);
     }
 
 
