@@ -27,47 +27,16 @@ public class UserController {
     @Autowired
     private final UserMapper userMapper;
 
-
-    /*@GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAll(){
-        List<UserEntity> listUsers = userService.getAll();
-        return new ResponseEntity<>(
-                listUsers.stream().map(userMapper::userEntityToUserResponseDto).toList(),
-                HttpStatus.OK);
-    }
-*/
     @GetMapping("{id}")
     public ResponseEntity<UserResponseDto> getById(@PathVariable("id") Long id){
         return userService.getById(id)
                 .map( user -> new ResponseEntity<>(userMapper.userEntityToUserResponseDto(user), HttpStatus.OK))
                 .orElse( new ResponseEntity<>(null, HttpStatus.NO_CONTENT));
-
-
-    }
-/*
-    @PostMapping
-    public ResponseEntity<UserResponseDto> create(@Validated @RequestBody UserRequestCreateDto userRequestCreateDto){
-        UserEntity userEntity = userMapper.userRequestCreateDtoToUserEntity(userRequestCreateDto);
-        UserEntity userEntityCreated = userService.create(userEntity);
-        return new ResponseEntity<>(userMapper.userEntityToUserResponseDto(userEntityCreated), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
-       return userService.delete(id) ?
-               new ResponseEntity<>(HttpStatus.NO_CONTENT) :
-               new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    @GetMapping("{userId}/blocks")
+    public ResponseEntity<?> getTaskBlocks(@PathVariable("userId") Long userId){
+        return new ResponseEntity<>(userService.getTaskBlockByUser(userId), HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<UserResponseDto> update(@PathVariable("id") Long id,
-                                                  @Validated @RequestBody UserRequestUpdateDto userRequestUpdateDto){
-        UserEntity userEntity = userMapper.userRequestUpdateDtoToUserEntity(userRequestUpdateDto);
-        UserEntity userUpdated = userService.update(id, userEntity);
-        return userUpdated == null ?
-                new ResponseEntity<>(HttpStatus.NOT_FOUND):
-                new ResponseEntity<>(userMapper.userEntityToUserResponseDto(userUpdated), HttpStatus.OK);
-
-    }*/
 }

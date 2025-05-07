@@ -1,7 +1,13 @@
 package com.microservice.users.services;
 
+import com.microservice.users.connector.TaskBlockConnector;
+import com.microservice.users.connector.response.TaskBlockDTO;
 import com.microservice.users.entities.UserEntity;
+import com.microservice.users.enums.APIError;
+import com.microservice.users.exceptions.APIExceptionHandler;
+import com.microservice.users.exceptions.GlobalTaskException;
 import com.microservice.users.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,43 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     private UserRepository userRepository;
 
-    /*@Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
-    }*/
+    private TaskBlockConnector taskBlockConnector;
 
     @Override
     public Optional<UserEntity> getById(Long id) {
         return userRepository.findById(id);
     }
-/*
-    @Override
-    public UserEntity create(UserEntity user) {
-        return userRepository.save(user);
-    }
 
     @Override
-    public UserEntity update(Long id, UserEntity user) {
-        if(userRepository.existsById(id)){
-            UserEntity userCurrent = userRepository.findById(id).get();
-            userCurrent.setEmail( user.getEmail() != null ? user.getEmail() : userCurrent.getEmail() );
-            userCurrent.setUsername( user.getUsername() != null ? user.getUsername() : userCurrent.getUsername() );
-            return userRepository.save(userCurrent);
+    public List<TaskBlockDTO> getTaskBlockByUser(Long userId) {
+        // verifico que el usuario ingresado exista
+        if(!userRepository.existsById(userId)){
+            throw new GlobalTaskException(APIError.USER_NOT_FOUND);
         }
-        return null;
+
+        // Traigo los bloques de tarea del microservicio de tasks
+        return taskBlockConnector.getTaskBlocks(userId);
     }
 
-    @Override
-    public boolean delete(Long id) {
-        if(userRepository.existsById(id)){
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }*/
 }

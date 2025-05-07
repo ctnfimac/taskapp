@@ -11,3 +11,49 @@ spring:
   jpa:
     #database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+
+
+# Configuración para la comunicación del microservicio de tasks
+http-connector:
+  hosts:
+    api-tasks:
+      host: localhost
+      port: 8092
+      endpoints:
+        get-taskblocks:
+          url: "/api/v1/block/{userId}"
+          readTimeout: 1000
+          writeTimeout: 1000
+          connectionTimeout: 2000
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        failure-rate-threshold: 50
+        sliding-window-type: count_based
+        sliding-window-size: 5
+
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 1
+
+        register-health-indicator: false
+        record-exceptions:
+          - io.netty.handler.timeout.ReadTimeoutException
+          - java.lang.RuntimeException
+          - java.lang.Exception
+    instances:
+      api-catalog:
+        base-config: default
+
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 2
+        limit-refresh-period: 3s
+        timeout-duration: 1s
+    instances:
+      post-reservation:
+        base-config: default
