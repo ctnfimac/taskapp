@@ -39,4 +39,10 @@ public class UserController {
         return new ResponseEntity<>(userService.getTaskBlockByUser(userId), HttpStatus.OK);
     }
 
+    @GetMapping("{blockId}/{userId}")
+    public ResponseEntity<?> getTaskBlocks(@PathVariable("blockId") Long blockId,
+                                           @PathVariable("userId") Long userId){
+        return new ResponseEntity<>(userService.getTaskByUserAndBlock(blockId,userId), HttpStatus.OK);
+    }
+
 }

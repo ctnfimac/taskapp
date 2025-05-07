@@ -25,6 +25,11 @@ http-connector:
           readTimeout: 1000
           writeTimeout: 1000
           connectionTimeout: 2000
+        get-task-byuserandblockfinished:
+          url: "/api/v1/tasks/{blockId}/{userId}"
+          readTimeout: 1000
+          writeTimeout: 1000
+          connectionTimeout: 2000
 
 
 resilience4j:
