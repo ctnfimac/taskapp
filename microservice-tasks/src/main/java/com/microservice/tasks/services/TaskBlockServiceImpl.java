@@ -6,12 +6,15 @@ import com.microservice.tasks.dto.task.TaskRequestCreate;
 import com.microservice.tasks.dto.taskblock.RequestUpdateDoneTaskBlockDTO;
 import com.microservice.tasks.enums.APIError;
 import com.microservice.tasks.exception.GlobalTaskException;
+import com.microservice.tasks.mappers.TaskBlockMapper;
 import com.microservice.tasks.models.TaskBlockEntity;
 import com.microservice.tasks.models.TaskEntity;
 import com.microservice.tasks.repositories.TaskBlockRepository;
 import com.microservice.tasks.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +23,7 @@ public class TaskBlockServiceImpl implements TaskBlockService{
     private UserConnector userConnector;
     private TaskBlockRepository taskBlockRepository;
     private TaskRepository taskRepository;
+    private TaskBlockMapper taskBlockMapper;
 
     @Override
     public TaskBlockEntity create(TaskBlockEntity taskBlockEntity) {
@@ -92,6 +96,13 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         taskBlock.setDone(true);
 
         return taskBlockRepository.save(taskBlock);
+    }
+
+    @Override
+    public List<TaskBlockEntity> getAllByUserId(Long userId) {
+        return taskBlockRepository.findByUserId(userId);/*.stream()
+                .map(taskBlockMapper::taskBlockEntityToResponseTaskBlockDTO)
+                .toList();*/
     }
 
     /**

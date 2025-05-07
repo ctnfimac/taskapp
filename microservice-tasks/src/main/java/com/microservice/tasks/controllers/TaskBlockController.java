@@ -3,10 +3,7 @@ package com.microservice.tasks.controllers;
 
 import com.microservice.tasks.dto.task.TaskRequestCreate;
 import com.microservice.tasks.dto.task.TaskResponseCreate;
-import com.microservice.tasks.dto.taskblock.RequestCreateTaskBlockDTO;
-import com.microservice.tasks.dto.taskblock.RequestUpdateDoneTaskBlockDTO;
-import com.microservice.tasks.dto.taskblock.ResponseCreateTaskBlockDTO;
-import com.microservice.tasks.dto.taskblock.ResponseUpdateDoneTaskBlockDTO;
+import com.microservice.tasks.dto.taskblock.*;
 import com.microservice.tasks.mappers.TaskBlockMapper;
 import com.microservice.tasks.mappers.TaskMapper;
 import com.microservice.tasks.models.TaskBlockEntity;
@@ -18,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/block")
@@ -63,5 +61,14 @@ public class TaskBlockController {
                 taskBlockMapper.taskBlockEntityToResponseUpdateDoneTaskBlockDTO(taskBlock),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping("{userId}")
+    public ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksByUserId(@PathVariable("userId") Long userId){
+        List<ResponseTaskBlockDTO> taskBlocks = taskBlockService.getAllByUserId(userId).stream()
+                .map(taskBlockMapper::taskBlockEntityToResponseTaskBlockDTO)
+                .toList();
+
+        return new ResponseEntity<>(taskBlocks, HttpStatus.OK);
     }
 }

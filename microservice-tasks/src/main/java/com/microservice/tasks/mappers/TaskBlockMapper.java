@@ -2,6 +2,7 @@ package com.microservice.tasks.mappers;
 
 import com.microservice.tasks.dto.taskblock.RequestCreateTaskBlockDTO;
 import com.microservice.tasks.dto.taskblock.ResponseCreateTaskBlockDTO;
+import com.microservice.tasks.dto.taskblock.ResponseTaskBlockDTO;
 import com.microservice.tasks.dto.taskblock.ResponseUpdateDoneTaskBlockDTO;
 import com.microservice.tasks.models.TaskBlockEntity;
 import org.mapstruct.Mapper;
@@ -19,4 +20,6 @@ public interface TaskBlockMapper {
     ResponseCreateTaskBlockDTO taskBlockEntityToResponseCreateTaskBlockDTO(TaskBlockEntity taskBlockEntity);
 
     ResponseUpdateDoneTaskBlockDTO taskBlockEntityToResponseUpdateDoneTaskBlockDTO(TaskBlockEntity taskBlockEntity);
+
+    ResponseTaskBlockDTO taskBlockEntityToResponseTaskBlockDTO(TaskBlockEntity taskBlockEntity);
 }
