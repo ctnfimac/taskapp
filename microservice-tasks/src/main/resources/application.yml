@@ -57,3 +57,11 @@ resilience4j:
     instances:
       post-reservation:
         base-config: default
+
+# configuración para la documentación swagger
+springdoc:
+  api-docs:
+    path: /openapi.json
+  swagger-ui:
+    path: /docs
+    url: /openapi.json
