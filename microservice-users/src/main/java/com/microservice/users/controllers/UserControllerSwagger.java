@@ -13,19 +13,19 @@ public interface UserControllerSwagger {
             summary = "Usuario por id",
             description = "Endpoint para obtener un usuario, si existe, por el valor de su id."
     )
-    public ResponseEntity<UserResponseDto> getById(@PathVariable("id") Long id);
+    ResponseEntity<UserResponseDto> getById(@PathVariable("id") Long id);
 
     @Operation(
             summary = "Obtener bloques de tarea",
             description = "Endpoint para obtener todos los bloques de tareas finalizados de un usuario específico"
     )
-    public ResponseEntity<?> getTaskBlocks(@PathVariable("userId") Long userId);
+    ResponseEntity<?> getTaskBlocks(@PathVariable("userId") Long userId);
 
 
     @Operation(
             summary = "Obtener tareas",
             description = "Endpoint para obtener todas las tareas correspondientes a un usuario y un bloque de tareas especifico."
     )
-    public ResponseEntity<?> getTasks(@PathVariable("blockId") Long blockId,
+    ResponseEntity<?> getTasks(@PathVariable("blockId") Long blockId,
                                            @PathVariable("userId") Long userId);
 }

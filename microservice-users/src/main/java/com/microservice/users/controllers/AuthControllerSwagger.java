@@ -16,13 +16,13 @@ public interface AuthControllerSwagger {
             summary = "Inició de Sesión",
             description = "Endpoint para Iniciar Sesión al sistema por parte del usuario."
     )
-    public ResponseEntity<?> login(@Validated @RequestBody RequestAuthLoginDto requestAuthLoginDto);
+    ResponseEntity<?> login(@Validated @RequestBody RequestAuthLoginDto requestAuthLoginDto);
 
 
     @Operation(
             summary = "Registro de Usuario",
             description = "Endpoint para registrarse en el sistema"
     )
-    public ResponseEntity<ResponseAuthRegisterDto> register(@Validated @RequestBody RequestAuthRegisterDto requestAuthRegister);
+    ResponseEntity<ResponseAuthRegisterDto> register(@Validated @RequestBody RequestAuthRegisterDto requestAuthRegister);
 
 }
