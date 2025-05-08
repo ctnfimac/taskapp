@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/block")
 @AllArgsConstructor
-public class TaskBlockController {
+public class TaskBlockController implements TaskBlockControllerSwagger{
 
     @Autowired
     private TaskBlockService taskBlockService;
