@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("api/v1/auth")
 @AllArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerSwagger{
 
     @Autowired
     private AuthService authService;
