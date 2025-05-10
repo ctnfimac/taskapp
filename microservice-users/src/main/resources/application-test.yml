@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+http-connector:
+  hosts:
+    api-tasks:
+      host: ${HTTP-CONNECTOR_HOSTS_API-USERS_HOST}
+      port: ${HTTP-CONNECTOR_HOSTS_API-USERS_PORT}
+      endpoints:
+        get-taskblocks:
+          url: "/api/v1/block/{userId}"
+          readTimeout: 1000
+          writeTimeout: 1000
+          connectionTimeout: 2000
+        get-task-byuserandblockfinished:
+          url: "/api/v1/tasks/{blockId}/{userId}"
+          readTimeout: 3000
+          writeTimeout: 3000
+          connectionTimeout: 5000
