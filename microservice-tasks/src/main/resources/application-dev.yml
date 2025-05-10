@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5436/tasksDb
+    username: admintask
+    password: admintask123
+
+http-connector:
+  hosts:
+    api-users:
+      host: localhost
+      port: 8091
+      endpoints:
+        get-user:
+          url: "/api/v1/user/{userId}"
+          readTimeout: 3000
+          writeTimeout: 3000
+          connectionTimeout: 5000

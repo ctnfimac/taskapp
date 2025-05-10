@@ -12,11 +12,13 @@ import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -56,6 +58,11 @@ public class UserConnector {
         return client.get()
                 .uri(urlEncoder -> urlEncoder.build(userId))
                 .retrieve()
+                .onStatus(
+                        HttpStatusCode::isError,
+                response -> response.bodyToMono(String.class)
+                        .flatMap(body -> Mono.error(new RuntimeException("Error al llamar a user-service: " + body)))
+        )
                 .bodyToMono(UserDTO.class)
                 .share()
                 .block();
@@ -64,13 +71,17 @@ public class UserConnector {
 
     public UserDTO fallbackGetUser(Long userId, CallNotPermittedException ex) {
         System.out.println("calling to fallbackGetUser-1");
-
+        System.err.println("Error en fallback: " + ex.getMessage());
+        ex.printStackTrace();
         return new UserDTO();
     }
 
     public UserDTO fallbackGetUser(Long userId, Exception ex) {
         System.out.println("calling to fallbackGetUser-2");
 
-        throw new RuntimeException();
+        /*throw new RuntimeException();*/
+        System.err.println("Error en fallback: " + ex.getMessage());
+        ex.printStackTrace();
+        return new UserDTO();
     }
 }
