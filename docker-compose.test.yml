@@ -45,6 +45,8 @@ services:
       - "8091:8091"
     depends_on:
       - userdb
+    env_file:
+      - .env.user.test
     environment:
       SPRING_PROFILES_ACTIVE: test
     networks:
