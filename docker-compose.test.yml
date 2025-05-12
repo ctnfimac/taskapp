@@ -1,0 +1,77 @@
+version: '3.4'
+
+services:
+  # Bases de datos a la cual me conectaré desde mi proyecto
+  userdb:
+    image: postgres
+    container_name: usermicroservice.db
+    restart: always
+    environment:
+      POSTGRES_DB: usersDb
+      POSTGRES_USER: adminuser
+      POSTGRES_PASSWORD: adminuser123
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./postgres_data_users:/var/lib/postgresql/data/
+      - ./init-scripts/userdb-init.sql:/docker-entrypoint-initdb.d/userdb-init.sql
+    networks:
+      - backend
+
+
+  taskdb:
+    image: postgres
+    container_name: taskmicroservice.db
+    restart: always
+    environment:
+      POSTGRES_DB: tasksDb
+      POSTGRES_USER: admintask
+      POSTGRES_PASSWORD: admintask123
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./postgres_data_tasks:/var/lib/postgresql/data/
+      - ./init-scripts/taskdb-init.sql:/docker-entrypoint-initdb.d/taskdb-init.sql
+    networks:
+      - backend
+
+  # backend de los microservicios
+  userservice:
+    image: taskapp/userservice:latest
+    build:
+      context: ./microservice-users
+      dockerfile: Dockerfile
+    ports:
+      - "8091:8091"
+    depends_on:
+      - userdb
+    env_file:
+      - .env.user.test
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    networks:
+      - backend
+
+
+  taskservice:
+    image: taskapp/taskservice:latest
+    build:
+      context: ./microservice-tasks
+      dockerfile: Dockerfile
+    ports:
+      - "8092:8092"
+    depends_on:
+      - taskdb
+    env_file:
+      - .env.task.test
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    networks:
+      - backend
+
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:

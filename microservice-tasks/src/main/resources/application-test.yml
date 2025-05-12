@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+
+
+http-connector:
+  hosts:
+    api-users:
+      host: ${HTTP-CONNECTOR_HOSTS_API-USERS_HOST}
+      port: ${HTTP-CONNECTOR_HOSTS_API-USERS_PORT}
+      endpoints:
+        get-user:
+          url: "/api/v1/user/{userId}"
+          readTimeout: 3000
+          writeTimeout: 3000
+          connectionTimeout: 5000
+
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    io.github.resilience4j: DEBUG
