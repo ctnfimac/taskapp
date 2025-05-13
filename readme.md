@@ -40,7 +40,6 @@ Contar con las siguientes herramientas antes de instalar el proyecto:
 1. Clonar el repositorio
 ```
 git https://github.com/ctnfimac/taskapp.git
-
 ```
 
 2. Me muevo hacia la carpeta del proyecto
@@ -49,7 +48,12 @@ cd taskapp
 ```
 
 ### Para el entorno de Pruebas:
-3. Levanto los contenedores de las base de datos, los microservicios y el cliente de postgresql pgadmin(*):
+3. Genero el .jar de los microservicios
+```
+mvn clean package -DskipTests
+```
+
+4. Levanto los contenedores de las base de datos, los microservicios y el cliente de postgresql pgadmin(*):
 ```
 docker-compose -f docker-compose.test.yml up --build -d
 ```
