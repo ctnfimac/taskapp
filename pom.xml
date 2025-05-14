@@ -114,14 +114,10 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!--<plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>3.3.4</version>
-        </plugin>-->
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>3.2.0</version>
           <configuration>
             <excludes>
               <exclude>
@@ -130,12 +126,6 @@
               </exclude>
             </excludes>
           </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>3.2.0</version> <!-- O la versión que uses -->
           <executions>
             <execution>
               <goals>
