@@ -2,10 +2,12 @@ name: UserService CI
 
 on:
   push:
+    branches: ["main"]
     paths:
       - 'microservice-users/**'
       - '.github/worflows/userservice-ci.yml'
   pull_request:
+    branches: ["main"]
     paths:
       - 'microservice-users/**'
 
