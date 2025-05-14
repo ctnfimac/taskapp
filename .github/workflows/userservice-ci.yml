@@ -5,7 +5,7 @@ on:
     branches: ["main"]
     paths:
       - 'microservice-users/**'
-      - '.github/worflows/userservice-ci.yml'
+      - '.github/workflows/userservice-ci.yml'
   pull_request:
     branches: ["main"]
     paths:
