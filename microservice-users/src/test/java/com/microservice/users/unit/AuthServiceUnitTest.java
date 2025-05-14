@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDateTime;
 
@@ -67,6 +68,24 @@ public class AuthServiceUnitTest {
         );
     }
 
+
+    @Test
+    @DisplayName("Test para verificar que hay un error al querer registrar un email existente")
+    void register_should_throw_DataIntegrityViolationException_when_duplicate_email() {
+        UserEntity user = UserEntity.builder()
+                .email("existing@example.com")
+                .password("123456")
+                .build();
+
+        Mockito.when(userRepository.save(user))
+                .thenThrow(new DataIntegrityViolationException("Duplicate"));
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            authService.register(user);
+        });
+    }
+
+
     @Test
     @DisplayName("Test para verificar que existe un user con el valor de email y password")
     void login_should_return_userentity(){
@@ -101,4 +120,26 @@ public class AuthServiceUnitTest {
                 () -> assertEquals(user.getId(),userSearched.getId())
         );
     }
+
+    @Test
+    @DisplayName("Test para verificar que el login retorna null si no encuentra el usuario")
+    void login_should_return_null_when_user_not_found(){
+        // given
+        UserEntity userLogin = UserEntity.builder()
+                .email("christian@gmail.com")
+                .password("123456")
+                .build();
+
+        Mockito.when(userRepository.getUserEntityByEmailAndPassword(
+                "christia2n@gmail.com", "1234562"
+        )).thenReturn(null);
+
+        // when
+        UserEntity user = authService.login(userLogin);
+
+        // then
+        verify(userRepository, Mockito.atMostOnce()).getUserEntityByEmailAndPassword("christia2n@gmail.com", "1234562");
+        assertNull(user);
+    }
+
 }
