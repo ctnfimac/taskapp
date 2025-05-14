@@ -1,0 +1,54 @@
+name: UserService CI
+
+on:
+  push:
+    paths:
+      - 'microservice-users/**'
+      - '.github/worflows/userservice-ci.yml'
+  pull_request:
+    paths:
+      - 'microservice-users/**'
+
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports: ['5432:5432']
+        env:
+          POSTGRES_DB: usersDb
+          POSTGRES_USER: adminuser
+          POSTGRES_PASSWORD: adminuser123
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout al código
+        uses: actions/checkout@v4
+
+      - name: Configuro JDK
+        uses: Setup jdk 17
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache de Dependencias de Maven
+        uses: actions/checkout@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Construyo el proyecto con maven
+        run: mvn -f microservice-users/pom.xml clean install -Ptest
+
+      - name: Ejecutar pruebas unitarias
+        run: mvn -f microservice-users/pom.xml test -P unit-tests
