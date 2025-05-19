@@ -1,19 +1,15 @@
-package com.microservice.users.unit;
+package com.microservice.users.unit.services;
 
 import com.microservice.users.entities.UserEntity;
 import com.microservice.users.repositories.UserRepository;
 import com.microservice.users.services.AuthServiceImpl;
-import net.bytebuddy.asm.Advice;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.control.MappingControl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDateTime;

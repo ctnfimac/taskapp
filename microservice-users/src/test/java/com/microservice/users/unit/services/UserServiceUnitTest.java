@@ -1,4 +1,4 @@
-package com.microservice.users.unit;
+package com.microservice.users.unit.services;
 
 import com.microservice.users.connector.TaskBlockConnector;
 import com.microservice.users.connector.TaskConnector;
@@ -9,7 +9,6 @@ import com.microservice.users.enums.APIError;
 import com.microservice.users.exceptions.GlobalTaskException;
 import com.microservice.users.repositories.UserRepository;
 import com.microservice.users.services.UserServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
