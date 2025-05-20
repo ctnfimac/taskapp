@@ -1,0 +1,45 @@
+<div class="container">
+    <section class="generic-section">
+        <div class="header">
+            <h2 class="header__title">Título bloque de tareas</h2>
+            <button
+                class="header__button"
+                mat-raised-button
+                disabled="true"
+                matTooltip="Finalizar bloque de tarea">
+                Finalizar
+            </button>
+        </div>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group tasknew">
+                <div class="tasknew__input">
+                    <label for="tarea">Tarea nueva</label>
+                    <input type="email" id="tarea" [(ngModel)]="tarea" name="tarea" required>
+                </div>
+                <mat-icon class="tasknew__add" aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+            </div>
+            <div class="form-group">
+                <ul class="list_container">
+                    <li class="list">
+                        <div class="list__item list__item--task"><p>Aprender apache Kafka</p></div>
+                        <div class="list__item list__item--delete"><mat-icon class="task_delete" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon></div> 
+                        <div class="list__item list__item--check"><mat-checkbox class="example-margin"></mat-checkbox></div> 
+                    </li>
+                    <mat-divider class="list__divider"></mat-divider>
+                    <li class="list">
+                        <div class="list__item list__item--task"><p>Aprender apache Kafka</p></div>
+                        <div class="list__item list__item--delete"><mat-icon class="task_delete" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon></div> 
+                        <div class="list__item list__item--check"><mat-checkbox class="example-margin"></mat-checkbox></div> 
+                    </li>
+                    <mat-divider class="list__divider"></mat-divider>
+                    <li class="list">
+                        <div class="list__item list__item--task"><p>Aprender apache Kafka</p></div>
+                        <div class="list__item list__item--delete"><mat-icon class="task_delete" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon></div> 
+                        <div class="list__item list__item--check"><mat-checkbox class="example-margin"></mat-checkbox></div> 
+                    </li>
+                    <mat-divider class="list__divider"></mat-divider>
+                </ul>
+            </div>            
+        </form>
+    </section>
+</div>
