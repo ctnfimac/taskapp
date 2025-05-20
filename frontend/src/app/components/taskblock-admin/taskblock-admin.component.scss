@@ -1,15 +1,16 @@
+
 .header{
     display: flex;
     justify-content: space-around;
     align-items: center;
     &__title{
-        width: 65%;
-    }
-
-    &__image{
-        width: 35%;
+        width: 100%;
+        font-size: 2em;
+        text-align: center;
+        color: #cddaed;
     }
 }
+
 
 .form-group {
   margin-bottom: 15px;

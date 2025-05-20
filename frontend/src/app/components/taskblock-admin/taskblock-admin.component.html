@@ -1,0 +1,16 @@
+<div class="container">
+    <section class="generic-section">
+        <div class="header">
+            <h2 class="header__title">Nuevo bloque de tareas</h2>
+        </div>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="title">Titulo</label>
+                <input type="email" id="title" [(ngModel)]="title" name="title" required>
+            </div>
+            <button type="submit">Crear</button>
+            
+        </form>
+        <a [routerLink]="['/']" class="register-link">Ver mi historial de tareas</a>
+    </section>
+</div>
