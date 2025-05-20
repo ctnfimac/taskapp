@@ -1,4 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+image{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    background-color: #18203d;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    padding: 2em;
+}
+
+
+// titulos de los formularios
+h1 {
+  text-align: center;
+  color: #cddaed; 
+  margin-bottom: 20px;
+}
+
+// enlaces de los formularios
+.register-link {
+    margin-top: 15px;
+    color: #4c5f93; 
+    text-decoration: none;
+    text-align: center;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
