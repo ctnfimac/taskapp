@@ -1,0 +1,20 @@
+<div class="container">
+    <section class="login-section">
+        <div class="header">
+            <h1 class="header__title">Tareas</h1>
+            <img class="header__image" src="./../../../assets/images/logo_codigofacilito.png" >
+        </div>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" [(ngModel)]="email" name="email" required>
+                <!-- <input matInput formControlName="email" > -->
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" [(ngModel)]="password" name="password" required>
+            </div>
+            <button type="submit">Ingresar</button>
+        </form>
+    </section>
+</div>
