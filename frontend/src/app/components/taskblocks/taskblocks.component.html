@@ -1,0 +1,34 @@
+<div class="container">
+    <section class="generic-section">
+        <div class="header">
+            <h2 class="header__title">Historial de Bloques de Tareas</h2>
+            <img class="header__image" src="./../../../assets/images/codigo_facilito_task.png" >
+        </div>
+        <div class="form-group">
+            <ul class="list_container">
+                <li class="list">
+                    <div class="list__item list__item--task">
+                        <p class="list__item--title">Aprender Microservicios</p>
+                        <p class="list__item--date">21/05/2025</p>
+                    </div>
+                </li>
+                <mat-divider class="list__divider"></mat-divider>
+                <li class="list">
+                    <div class="list__item list__item--task">
+                        <p class="list__item--title">Compras de sabado</p>
+                        <p class="list__item--date">12/12/2024</p>
+                    </div>
+                </li>
+                <mat-divider class="list__divider"></mat-divider>
+                <li class="list">
+                    <div class="list__item list__item--task">
+                        <p class="list__item--title">Pan</p>
+                        <p class="list__item--date">09/11/2023</p>
+                    </div>
+                </li>
+                <mat-divider class="list__divider"></mat-divider>
+            </ul>
+        </div>   
+        <a [routerLink]="['/taskblock/add']" class="register-link">Regresar</a>  
+    </section>
+</div>
