@@ -7,23 +7,16 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
-
 @Component({
-  selector: 'app-taskblocks',
+  selector: 'app-tasks',
   standalone: true,
   imports: [CommonModule, FormsModule, 
-      RouterModule, MatIconModule,
-      MatListModule, MatDividerModule,
-      MatCheckboxModule],
-  templateUrl: './taskblocks.component.html',
-  styleUrl: './taskblocks.component.scss'
+        RouterModule, MatIconModule,
+        MatListModule, MatDividerModule,
+        MatCheckboxModule],
+  templateUrl: './tasks.component.html',
+  styleUrl: './tasks.component.scss'
 })
-export class TaskblocksComponent {
-  tarea: string = '';
+export class TasksComponent {
 
-
-  onSubmit() {
-    console.log('Email:', this.tarea);
-    // Aquí agrego la lógica
-  }
 }
