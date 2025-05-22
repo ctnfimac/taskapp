@@ -33,4 +33,5 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     """)
     List<TaskEntity> findTasksByBlockFinishedAndIdUserId(@Param("userId") Long userId, @Param("blockId") Long blockId);
 
+    List<TaskEntity> findByTaskBlockEntityId(Long taskBlockId);
 }

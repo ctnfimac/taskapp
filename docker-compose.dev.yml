@@ -30,6 +30,15 @@ services:
       - ./postgres_data_tasks:/var/lib/postgresql/data/
       - ./init-scripts/taskdb-init.sql:/docker-entrypoint-initdb.d/taskdb-init.sql
 
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq.taskbroker
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # web de administración
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123
 
 
   # cliente de base de datos si es que no quiero usar la linea de comandos

@@ -12,4 +12,5 @@ public interface TaskBlockService {
     void deleteTask(Long blockId, Long taskId);
     TaskBlockEntity setDoneTrue(Long blockId, RequestUpdateDoneTaskBlockDTO user);
     List<TaskBlockEntity> getAllByUserId(Long userId);
+    void publisher(Long userId, TaskBlockEntity taskBlock);
 }
