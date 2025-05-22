@@ -16,6 +16,7 @@
   <modules>
     <module>microservice-tasks</module>
     <module>microservice-users</module>
+    <module>microservice-notification</module>
   </modules>
 
   <name>TaskAppCodigofacilito</name>
