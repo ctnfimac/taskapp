@@ -4,30 +4,5 @@ server:
 spring:
   application:
     name: microservice-notification
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: 123
-  mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 2525
-    username: c3f115a4db5ce2
-    password: 9e5fe29f0072ee
-
-
-jpa:
-  show-sql: true
-
-# configuración para la documentación swagger
-#springdoc:
-#  api-docs:
-#    path: /openapi.json
-#  swagger-ui:
-#    path: /docs
-#    url: /openapi.json

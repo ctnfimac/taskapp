@@ -29,7 +29,6 @@ public class TaskEventConsumer {
             emailMenssage.append(task).append("<br>");
         }
 
-        // Acá podrías invocar un EmailService para enviar el correo
         emailService.sendEmail(
                 emailDestinatario,
                 emailAsunto,

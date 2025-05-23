@@ -1,0 +1,11 @@
+spring:
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+  mail:
+    host: ${SPRING_EMAIL_HOST}
+    port: ${SPRING_EMAIL_PORT}
+    username: ${SPRING_EMAIL_USERNAME}
+    password: ${SPRING_EMAIL_PASSWORD}

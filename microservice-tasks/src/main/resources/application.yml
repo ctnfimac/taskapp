@@ -10,13 +10,6 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
 
-  # configuración para la conexión con rabbitmq
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: 123
-
 jpa:
   show-sql: true
 

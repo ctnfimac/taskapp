@@ -1,6 +1,11 @@
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5436/tasksDb
-    username: admintask
-    password: admintask123
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: c3f115a4db5ce2
+    password: 9e5fe29f0072ee

@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ResponseTaskBlockDTO {
-    //private Long userId;
     private String userEmail;
     private String taskBlockTitle;
     private LocalDateTime createdAt;
