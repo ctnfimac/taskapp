@@ -94,10 +94,12 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         // actualizo el valor de done del bloque de tareas
         taskBlock.setDone(true);
 
-        //TODO: acá tengo que enviar la señal al sistema de mensajeria
+        TaskBlockEntity taskUpdated = taskBlockRepository.save(taskBlock);
+
+        // Envio la información al sistema de mensajeria
         publisher(user.getUserId(), taskBlock);
 
-        return taskBlockRepository.save(taskBlock);
+        return taskUpdated;
     }
 
 
@@ -107,6 +109,13 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         return taskBlockRepository.findByUserIdAndDoneTrue(userId);
     }
 
+
+    /**
+     * Envio la lista de tareas y el titulo del bloque de tareas
+     * al email correspondiente del usuario
+     * @param userId Long
+     * @param taskBlock TaskBlockEntity
+     */
     @Override
     public void publisher(Long userId, TaskBlockEntity taskBlock) {
         AllTasksCompletedEventDTO taskCompletedDto = new AllTasksCompletedEventDTO();

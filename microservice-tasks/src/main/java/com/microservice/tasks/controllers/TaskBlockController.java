@@ -74,9 +74,9 @@ public class TaskBlockController implements TaskBlockControllerSwagger{
 
     // endpoint de prueba para verificar la conexión con rabbit mq
     // y el envio correcto de la información
-    @GetMapping("/publish")
+    /*@GetMapping("/publish")
     public void testRabbitMQPublisher(){
         TaskBlockEntity taskBlock = taskBlockService.getAllByUserId(1L).get(0);
         taskBlockService.publisher(1L,  taskBlock);
-    }
+    }*/
 }
