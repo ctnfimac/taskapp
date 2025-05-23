@@ -12,7 +12,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE, false); // false = no durable
+        return new Queue(QUEUE, true); // false = no durable
     }
 
     @Bean

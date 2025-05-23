@@ -2,20 +2,37 @@ package com.microservice.notification.consumer;
 
 import com.microservice.notification.config.RabbitMQConfig;
 import com.microservice.notification.dtos.ResponseTaskBlockDTO;
+import com.microservice.notification.services.EmailService;
+import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class TaskEventConsumer {
+
+    private EmailService emailService;
+
+
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE)
     public void handleTasksCompleted(ResponseTaskBlockDTO completedTasks) {
-        System.out.println("📩 ¡Mensaje recibido desde RabbitMQ!");
+        String emailDestinatario = completedTasks.getUserEmail();
+        String emailAsunto = "Se completó las tareas de: " + completedTasks.getTaskBlockTitle();
+        StringBuilder emailMenssage = new StringBuilder();
+
+        String blockTitle = "<b>" + completedTasks.getTaskBlockTitle() + ":</b></br>";
+        emailMenssage.append(blockTitle);
+
+        System.out.println("¡Mensaje recibido desde RabbitMQ!");
         for (String task : completedTasks.getTaskTitles()) {
-            System.out.printf("✅ Tarea completada: %s%n", task);
+            emailMenssage.append(task).append("<br>");
         }
 
         // Acá podrías invocar un EmailService para enviar el correo
+        emailService.sendEmail(
+                emailDestinatario,
+                emailAsunto,
+                emailMenssage.toString());
     }
 }
