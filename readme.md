@@ -1,7 +1,8 @@
 # Aplicación de Tareas
 Este es el proyecto Final del Bootcamp [Microservicios con Java](https://codigofacilito.com/programas/java-microservicios)
 realizado en [Codigo Facilito](https://codigofacilito.com/)
-Se trata de un administrador de Tareas el cual se separó en dos microservicios, uno de usuarios y otro de tareas
+Se trata de un administrador de Tareas el cual se separó en tres microservicios: uno de usuarios, uno de tareas y por último un microservicio
+de notificaciones.
 
 
 ## Tecnologías
@@ -15,12 +16,12 @@ Se trata de un administrador de Tareas el cual se separó en dos microservicios,
 - Docker
 - Docker Compose
 - Git
+- RabbitMQ
 
 ## Arquitectura
 - Microservicios 
 
-![Image](https://github.com/user-attachments/assets/a8c7bb55-90ff-4b89-b450-c5ecb72b4049)
-
+![Image](https://github.com/user-attachments/assets/34cd8a1b-3a5e-4515-9008-bd1c8b3039d6)
 
 ## IDE Utilizado
 IntelliJ IDEA pero también es compatible con otros IDEs como Eclipse o VS Code.
