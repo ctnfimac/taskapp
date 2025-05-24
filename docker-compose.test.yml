@@ -35,6 +35,20 @@ services:
     networks:
       - backend
 
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq.taskbroker
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # web de administración
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123
+    networks:
+      - backend
+
+
   # backend de los microservicios
   userservice:
     image: taskapp/userservice:latest
@@ -62,8 +76,25 @@ services:
       - "8092:8092"
     depends_on:
       - taskdb
+      - rabbitmq
     env_file:
       - .env.task.test
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    networks:
+      - backend
+
+  notificationservice:
+    image: taskapp/notificationservice:latest
+    build:
+      context: ./microservice-notification
+      dockerfile: Dockerfile
+    ports:
+      - "8093:8093"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - .env.notification.test
     environment:
       SPRING_PROFILES_ACTIVE: test
     networks:

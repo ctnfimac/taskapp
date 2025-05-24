@@ -1,0 +1,8 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: microservice-notification
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}

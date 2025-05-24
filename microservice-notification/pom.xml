@@ -7,11 +7,11 @@
 		<artifactId>TaskAppCodigofacilito</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.microservice.tasks</groupId>
-	<artifactId>microservice-tasks</artifactId>
+	<groupId>com.microservice.notification</groupId>
+	<artifactId>microservice-notification</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservice-tasks</name>
-	<description>Microservicio de tareas</description>
+	<name>microservice-notification</name>
+	<description>Microservicio del Notificaciones</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -31,11 +31,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
+
+		<!-- Para el envio de email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>3.4.1</version>
 		</dependency>
 	</dependencies>
 
