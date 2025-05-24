@@ -1,17 +1,19 @@
 package com.microservice.tasks.services;
 
+import com.microservice.tasks.config.RabbitMQConfig;
 import com.microservice.tasks.connector.UserConnector;
 import com.microservice.tasks.connector.response.UserDTO;
+import com.microservice.tasks.dto.rabbitmq.AllTasksCompletedEventDTO;
 import com.microservice.tasks.dto.task.TaskRequestCreate;
 import com.microservice.tasks.dto.taskblock.RequestUpdateDoneTaskBlockDTO;
 import com.microservice.tasks.enums.APIError;
 import com.microservice.tasks.exception.GlobalTaskException;
-import com.microservice.tasks.mappers.TaskBlockMapper;
 import com.microservice.tasks.models.TaskBlockEntity;
 import com.microservice.tasks.models.TaskEntity;
 import com.microservice.tasks.repositories.TaskBlockRepository;
 import com.microservice.tasks.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class TaskBlockServiceImpl implements TaskBlockService{
     private UserConnector userConnector;
     private TaskBlockRepository taskBlockRepository;
     private TaskRepository taskRepository;
-    private TaskBlockMapper taskBlockMapper;
+    private final RabbitTemplate rabbitTemplate;
 
     @Override
     public TaskBlockEntity create(TaskBlockEntity taskBlockEntity) {
@@ -89,18 +91,51 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         taskRepository.findByBlockIdAndAllTasksDone(blockId)
                  .orElseThrow(() -> new GlobalTaskException(APIError.TASK_NOT_DONE));
 
-
-        checkUserExistsById(user.getUserId());
-
         // actualizo el valor de done del bloque de tareas
         taskBlock.setDone(true);
 
-        return taskBlockRepository.save(taskBlock);
+        TaskBlockEntity taskUpdated = taskBlockRepository.save(taskBlock);
+
+        // Envio la información al sistema de mensajeria
+        publisher(user.getUserId(), taskBlock);
+
+        return taskUpdated;
     }
+
+
 
     @Override
     public List<TaskBlockEntity> getAllByUserId(Long userId) {
         return taskBlockRepository.findByUserIdAndDoneTrue(userId);
+    }
+
+
+    /**
+     * Envio la lista de tareas y el titulo del bloque de tareas
+     * al email correspondiente del usuario
+     * @param userId Long
+     * @param taskBlock TaskBlockEntity
+     */
+    @Override
+    public void publisher(Long userId, TaskBlockEntity taskBlock) {
+        AllTasksCompletedEventDTO taskCompletedDto = new AllTasksCompletedEventDTO();
+
+        UserDTO userDTO = checkUserExistsById(userId);
+        taskCompletedDto.setUserEmail(userDTO.getEmail());
+        taskCompletedDto.setTaskBlockTitle(taskBlock.getTitle());
+        taskCompletedDto.setCreatedAt(taskBlock.getCreatedAt());
+
+        List<String> taskList = taskRepository.findByTaskBlockEntityId(taskBlock.getId())
+                .stream()
+                .map(TaskEntity::getTitle)
+                .toList();
+        taskCompletedDto.setTaskTitles(taskList);
+
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.EXCHANGE,
+                RabbitMQConfig.ROUTING_KEY,
+                taskCompletedDto
+        );
     }
 
     /**
@@ -117,10 +152,12 @@ public class TaskBlockServiceImpl implements TaskBlockService{
      * verifico que el usuario existe en el microservicio de usuarios
      * @param userId Long
      */
-    private void checkUserExistsById(Long userId){
+    private UserDTO checkUserExistsById(Long userId){
         UserDTO user = userConnector.getUser(userId);
         if(user == null)
             throw new GlobalTaskException(APIError.USER_NOT_FOUND);
+
+        return user;
     }
 
     /**

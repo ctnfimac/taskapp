@@ -1,26 +1,25 @@
 # Aplicación de Tareas
-Este es el proyecto Final del Bootcamp [Microservicios con Java](https://codigofacilito.com/programas/java-microservicios)
+Este es el proyecto final del Bootcamp [Microservicios con Java](https://codigofacilito.com/programas/java-microservicios)
 realizado en [Codigo Facilito](https://codigofacilito.com/)
-Se trata de un administrador de Tareas el cual se separó en dos microservicios, uno de usuarios y otro de tareas
+Se trata de un administrador de Tareas el cual se separó en tres microservicios: uno de usuarios, uno de tareas y por último un microservicio
+de notificaciones.
 
 
 ## Tecnologías
 - Java 17
-- Spring Boot 3.4.4
-- Spring Data
+- Spring Boot - Data
 - Postgresql
-- Resilience
 - Junit
 - Maven
 - Docker
 - Docker Compose
 - Git
+- RabbitMQ
 
 ## Arquitectura
 - Microservicios 
 
-![Image](https://github.com/user-attachments/assets/a8c7bb55-90ff-4b89-b450-c5ecb72b4049)
-
+![Image](https://github.com/user-attachments/assets/34cd8a1b-3a5e-4515-9008-bd1c8b3039d6)
 
 ## IDE Utilizado
 IntelliJ IDEA pero también es compatible con otros IDEs como Eclipse o VS Code.
@@ -28,7 +27,7 @@ IntelliJ IDEA pero también es compatible con otros IDEs como Eclipse o VS Code.
 ## Instalación del proyecto
 
 ### Requisitos Previos
-Contar con las siguientes herramientas antes de instalar el proyecto:
+Contar con las siguientes herramientas antes de la instalación:
 
 - Java JDK 17+
 - Maven 3.8+
@@ -37,6 +36,7 @@ Contar con las siguientes herramientas antes de instalar el proyecto:
 - Git
 
 
+### Para el Entorno de Pruebas:
 1. Clonar el repositorio
 ```
 git https://github.com/ctnfimac/taskapp.git
@@ -47,19 +47,27 @@ git https://github.com/ctnfimac/taskapp.git
 cd taskapp
 ```
 
-### Para el entorno de Pruebas:
 3. Genero el .jar de los microservicios
 ```
 mvn clean package -DskipTests
 ```
 
-4. Levanto los contenedores de las base de datos, los microservicios y el cliente de postgresql pgadmin(*):
+4. Levanto los contenedores de las base de datos, los microservicios, RabbitMq y el cliente de postgresql pgadmin(*):
 ```
 docker-compose -f docker-compose.test.yml up --build -d
 ```
 
-
 ### Para el entorno de desarrollo:
+1. Clonar el repositorio
+```
+git https://github.com/ctnfimac/taskapp.git
+```
+
+2. Me muevo hacia la carpeta del proyecto
+```
+cd taskapp
+```
+
 3.  Levanto los contenedores de las base de datos y cliente pgadmin(*):
 ```
 docker-compose -f docker-compose.dev.yml up --build -d
@@ -75,16 +83,25 @@ mvn spring-boot:run
 mvn spring-boot:run
 ```
 
-Documentacion, api de tareas:
+6. Levanto el microservicio de notificaciones, desde la carpeta microservice-notification ejecutar:
+```
+mvn spring-boot:run
+```
+
+### Documentacion, api de tareas:
 ```
 http://localhost:8091/docs
 ```
 
-Documentacion, api de usuarios:
+### Documentacion, api de usuarios:
 ```
 http://localhost:8092/docs
 ```
-
+### Pantalla del sistema de mensajeria con rabbitmq
+usuario y contraseña esta en el docker-compose
+```
+http://localhost:15672/
+```
 
 ## Diagrama de flujo del uso de la aplicación
 El proyecto por el momento está pensado para el desarrollo del backend, pero el diagrama lo realicé para
@@ -99,6 +116,7 @@ poder analizar que endpoints desarrollar
 - Iniciar Sesión con usuario y contraseña.
 - Crear bloque de tareas
 - Finalizar bloque de tareas
+  - Enviar notificación por email
 - Crear Tarea
 - Obtener Tareas de un usuario y bloque finalizado
 - Eliminar Tarea
@@ -106,5 +124,5 @@ poder analizar que endpoints desarrollar
 - Obtener bloques de tarea de un usuario
 
 
-(*) El pgadmin es un cliente de base de datos, que no es indispensable par el funcionamiento del proyecto pero sirve 
-para ver la información de la base de datos de una forma más gráfica
+(*) El pgadmin es un cliente de base de datos, que no es indispensable para el funcionamiento del proyecto pero sirve 
+para visualizar la información de la base de datos de una forma más gráfica
