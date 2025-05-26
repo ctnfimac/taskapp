@@ -11,13 +11,27 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Registro del usuario
+   */
   register(email: String, password: String): Observable<AuthResponseDTO> {
-    console.log('entro acá')
     const userData = {
       email,
       password
     };
 
     return this.http.post<AuthResponseDTO>(`${this.apiUrl}/register`,userData);
+  }
+
+  /**
+   * Inicio de sesión del usuario
+   */
+  login(email: String, password: String): Observable<AuthResponseDTO> {
+    const userData = {
+      email,
+      password
+    };
+
+    return this.http.post<AuthResponseDTO>(`${this.apiUrl}/login`,userData);
   }
 }

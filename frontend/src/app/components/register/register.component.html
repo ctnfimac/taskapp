@@ -17,7 +17,7 @@
         </form>
         <a [routerLink]="['/login']" class="login-link">Iniciar Sesión</a>
 
-        <div *ngIf="successMessage" class="success-message">
+        <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage">
             {{ successMessage }}
         </div>
         <div *ngIf="errorMessage" class="error-message">

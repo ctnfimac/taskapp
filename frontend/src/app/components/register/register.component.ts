@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -18,14 +18,12 @@ export class RegisterComponent {
   successMessage: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private fb: FormBuilder,) {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
   }
 
   onSubmit() {
-    console.log('hola')
-    console.log(this.email)
-    console.log(this.password)
-
     this.authService.register(this.email, this.password)
         .subscribe({
           next: (response) => {
@@ -33,6 +31,10 @@ export class RegisterComponent {
             this.errorMessage = '';
             this.email = '';
             this.password = '';
+            // Redirigir después de 5 segundos
+              setTimeout(() => {
+                this.router.navigate(['/login']);
+              }, 5000);
           },
           error: (error) => {
             this.errorMessage = 'Error, intente Luego';
