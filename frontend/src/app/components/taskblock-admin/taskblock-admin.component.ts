@@ -25,10 +25,6 @@ export class TaskblockAdminComponent {
     private router: Router
   ) {
     
-    if (this.authService && !this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-    }
-
     const currentUser = this.authService.getCurrentUser();
 
     if(currentUser?.id != null){

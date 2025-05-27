@@ -5,13 +5,42 @@ import { TaskblockAdminComponent } from './components/taskblock-admin/taskblock-
 import { TaskAdminComponent } from './components/task-admin/task-admin.component';
 import { TaskblocksComponent } from './components/taskblocks/taskblocks.component';
 import { TasksComponent } from './components/tasks/tasks.component';
+import { authGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { 
+      path: 'taskblock/add', 
+      component: TaskblockAdminComponent,
+      canActivate: [authGuard]
+    },
+    { 
+      path: 'taskblock', 
+      component: TaskblocksComponent,
+      canActivate: [authGuard]
+    },
+    { 
+      path: 'taskblock/tasks', 
+      component: TasksComponent,
+      canActivate: [authGuard]
+    },
+    { 
+      path: 'tasks', 
+      component: TaskAdminComponent,
+      canActivate: [authGuard]
+    },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: '', component: LoginComponent },
+];
+
+/*export const routes: Routes = [
     { path: 'taskblock/add', component: TaskblockAdminComponent },
     { path: 'taskblock', component: TaskblocksComponent },
     { path: 'taskblock/tasks', component: TasksComponent },
-    { path: 'tasks', component: TaskAdminComponent }
-];
+    { path: 'tasks', component: TaskAdminComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: '', component: LoginComponent },
+];*/
+

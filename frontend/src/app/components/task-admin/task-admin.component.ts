@@ -30,22 +30,19 @@ export class TaskAdminComponent {
   titleBlock: string = '';
   tasks: TaskResponseDTO[] = [];
   userId?: number;
+  taskBlockId?: number;
   title: string = '';
 
   constructor(
     private route: ActivatedRoute, 
     private authService: AuthService, 
     private taskService: TaskService,
-    private router: Router) {
-      
-    if (this.authService && !this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-    }
-
-    this.userId = authService.getCurrentUser()?.id;
+    ) {
+    this.userId = this.authService.getCurrentUser()?.id;
   }
 
   ngOnInit() {
+    
     this.route.queryParams.subscribe(params => {
       this.title = params['title'] || 'Título por defecto';
     });
@@ -54,9 +51,9 @@ export class TaskAdminComponent {
       this.taskService.getTaksAndTitleBlock(this.userId)
         .subscribe({
           next: (response) => {
+            this.taskBlockId = response.idTaskBlock;
             this.titleBlock = response.titleBlock;
             this.tasks = response.listTasks;
-            console.log('Respuesta del servidor:', response);
           },
           error: (error) => {
             console.error('Error al obtener las tareas:', error);
@@ -76,7 +73,29 @@ export class TaskAdminComponent {
   }
 
   toggleDone(taskId: number) {
-    console.log('Cambiando estado de tarea con ID:', taskId);
-    // TODO: Aquí implementaremos la lógica para cambiar el estado de la tarea
+    console.log('Cambiando estado de tarea con ID:' + taskId + ', userId: ' + this.userId + ', blockId: ' + this.taskBlockId);
+    this.taskService.toogleDone(taskId, this.userId, this.taskBlockId)
+      .subscribe({
+          next: (response) => {
+            console.log('Respuesta del servidor:', response);
+            // Actualizar la lista de tareas después de cambiar el estado
+            if (this.userId) this.refreshTaskList(this.userId)
+          },
+          error: (error) => {
+            console.error('Error en toggleDone:', error);
+          }
+        })
+  }
+
+  refreshTaskList(userId: number){
+    this.taskService.getTaksAndTitleBlock(userId)
+        .subscribe({
+          next: (response) => {
+            this.tasks = response.listTasks;
+          },
+          error: (error) => {
+            console.error('Error al actualizar las tareas:', error);
+          }
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { TaskAllResponseDTO } from './dtos/task';
+import { TaskAllResponseDTO, TaskResponseToogleDTO } from './dtos/task';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,18 @@ export class TaskService {
     return this.http.get<TaskAllResponseDTO>(`${this.apiUrl}/${userId}/all`);
   }
 
+
+  /**
+   * Modifico el stado de la tarea, campo done
+   */
+  toogleDone(taskId: number, userId?: number, taskBlockId?: number): Observable<TaskResponseToogleDTO>{
+
+    const data = {
+        taskBlockId,
+        userId
+    }
+
+    return this.http.patch<TaskResponseToogleDTO>(`${this.apiUrl}/${taskId}/toogle-done`, data);
+  }
 
 }
