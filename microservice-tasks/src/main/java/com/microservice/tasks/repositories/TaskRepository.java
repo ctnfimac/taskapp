@@ -36,5 +36,5 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     List<TaskEntity> findByTaskBlockEntityId(Long taskBlockId);
 
     // Solo puede existir un taskblock con Done = False
-    List<TaskEntity> findByTaskBlockEntityDoneFalseAndTaskBlockEntityUserId(Long userID);
+    List<TaskEntity> findByTaskBlockEntityDoneFalseAndTaskBlockEntityUserIdOrderByIdAsc(Long userID);
 }

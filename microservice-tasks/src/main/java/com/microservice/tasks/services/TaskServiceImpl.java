@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService{
         // Valido el usuario
         checkUserExistsById(userId);
 
-        return taskRepository.findByTaskBlockEntityDoneFalseAndTaskBlockEntityUserId(userId);
+        return taskRepository.findByTaskBlockEntityDoneFalseAndTaskBlockEntityUserIdOrderByIdAsc(userId);
     }
 
 
