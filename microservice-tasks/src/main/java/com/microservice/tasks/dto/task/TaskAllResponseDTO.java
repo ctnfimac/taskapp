@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskAllResponseDTO {
+    private Long idTaskBlock;
     private String titleBlock;
     private List<TaskResponseDTO> listTasks;
 }

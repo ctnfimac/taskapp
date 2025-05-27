@@ -47,16 +47,16 @@ public class TaskController implements TaskControllerSwagger{
     @Override
     @GetMapping("/{userId}/all")
     public ResponseEntity<TaskAllResponseDTO> getTaskByUserAndBlockActive(Long userId) {
-        TaskAllResponseDTO taskAllResponse = new TaskAllResponseDTO();
-
         List<TaskResponseDTO> taskResponseDTOS = taskService.findByUserAndBLockActive(userId).stream()
                 .map(taskMapper::taskEntityToTaskResponseDTO)
                 .toList();
 
-        taskAllResponse.setListTasks(taskResponseDTOS);
-
         TaskBlockEntity taskBlock = taskBlockService.findByUserAndDoneFalse(userId);
+
+        TaskAllResponseDTO taskAllResponse = new TaskAllResponseDTO();
+        taskAllResponse.setListTasks(taskResponseDTOS);
         taskAllResponse.setTitleBlock(taskBlock.getTitle());
+        taskAllResponse.setIdTaskBlock(taskBlock.getId());
 
         return new ResponseEntity<>(taskAllResponse, HttpStatus.OK);
     }
