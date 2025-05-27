@@ -22,6 +22,7 @@ public class TaskServiceImpl implements TaskService{
     private UserConnector userConnector;
     private TaskRepository taskRepository;
     private TaskBlockRepository taskBlockRepository;
+    private TaskBlockService taskBlockService;
 
 
     @Override
@@ -45,8 +46,24 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskEntity> findByUserAndBLock(Long userId, Long blockId) {
+    public List<TaskEntity> findByUserAndBLockFinished(Long userId, Long blockId) {
         return taskRepository.findTasksByBlockFinishedAndIdUserId(userId, blockId);
+    }
+
+    @Override
+    public List<TaskEntity> findByUserAndBLock(Long userId, Long blockId) {
+        TaskBlockEntity taskBlock = taskBlockRepository.findById(blockId)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_FOUND));
+
+        // verifico que el usuario del blockId ingresado coincida con el del user
+        if(!taskBlock.getUserId().equals(userId)){
+            throw new GlobalTaskException(APIError.USER_DIFFERENT);
+        }
+
+        // Valido el usuario
+        checkUserExistsById(userId);
+
+        return taskRepository.findByTaskBlockEntityUserIdAndTaskBlockEntityId(userId, blockId);
     }
 
 

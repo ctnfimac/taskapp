@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // Traigo las tareas del microservicio de tasks
-        return taskConnector.getTasksByUserAndBlock(blockId, userId);
+        return taskConnector.getTasksByUserAndBlockFinished(blockId, userId);
     }
 
 }

@@ -34,7 +34,7 @@ public class TaskConnector {
     }
 
     @CircuitBreaker(name = "api-tasks", fallbackMethod = "fallbackGetTask")
-    public List<TaskDTO> getTasksByUserAndBlock(Long blockId, Long userId) {
+    public List<TaskDTO> getTasksByUserAndBlockFinished(Long blockId, Long userId) {
         System.out.println("Calling to api de tasks");
         HostConfig hostConfig = configuration.getHosts().get(HOST);
         EndpointConfig endpointConfig = hostConfig.getEndpoints().get(ENDPOINT);

@@ -1,5 +1,6 @@
 package com.microservice.tasks.controllers;
 
+import com.microservice.tasks.dto.task.TaskAllResponseDTO;
 import com.microservice.tasks.dto.task.TaskRequestUpdateDone;
 import com.microservice.tasks.dto.task.TaskResponseDTO;
 import com.microservice.tasks.dto.task.TaskResponseUpdateDone;
@@ -24,8 +25,14 @@ public interface TaskControllerSwagger {
 
 
     @Operation(
-            summary = "Tareas de un usuario",
+            summary = "Tareas de un usuario y Bloque de tareas finalizado",
             description = "Endpoint para obtener todas las tareas de un usuario y de un bloque específico."
     )
-    ResponseEntity<List<TaskResponseDTO>> getTaskByUser(@PathVariable Long blockId, @PathVariable Long userId);
+    ResponseEntity<List<TaskResponseDTO>> getTaskByUserAndBlockFinished(@PathVariable Long blockId, @PathVariable Long userId);
+
+    @Operation(
+            summary = "Tareas del bloque de un usuario ",
+            description = "Endpoint para obtener todas las tareas de un usuario y de un bloque específico sin importar si está finalizado"
+    )
+    ResponseEntity<TaskAllResponseDTO> getTaskByUserAndBlock(@PathVariable Long blockId, @PathVariable Long userId);
 }

@@ -138,6 +138,12 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         );
     }
 
+    @Override
+    public TaskBlockEntity findById(Long id) {
+        return taskBlockRepository.findById(id)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_FOUND));
+    }
+
     /**
      * verifico que el usuario existe en el microservicio de usuarios
      * @param taskBlockEntity TaskEntity

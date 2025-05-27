@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface TaskService {
     TaskEntity toogleDoneTask(Long taskId, TaskRequestUpdateDone taskRequestUpdateDone);
+    List<TaskEntity> findByUserAndBLockFinished(Long userId, Long blockId);
     List<TaskEntity> findByUserAndBLock(Long userId, Long blockId);
 }
