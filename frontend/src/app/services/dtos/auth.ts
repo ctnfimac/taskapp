@@ -5,7 +5,7 @@ export interface AuthRequestDTO {
 
 
 export interface AuthResponseDTO {
-    id: string;
+    id: Number;
     email: string;
 }
   

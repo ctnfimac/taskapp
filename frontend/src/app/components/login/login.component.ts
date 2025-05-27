@@ -38,7 +38,7 @@ export class LoginComponent {
               }, 3000);
             },
             error: (error) => {
-              this.errorMessage = 'Error con el Inicio de sesión';
+              this.errorMessage = 'Credenciales incorrectas';
               this.successMessage = '';
             }
           });

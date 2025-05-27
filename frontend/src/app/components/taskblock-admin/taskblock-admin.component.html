@@ -12,5 +12,11 @@
             
         </form>
         <a [routerLink]="['/taskblock']" class="register-link">Ver mi historial de tareas</a>
+        <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage">
+            {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
     </section>
 </div>
