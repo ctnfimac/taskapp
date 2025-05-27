@@ -15,7 +15,7 @@ export class TaskBlockService {
   /**
    * Registro del usuario
    */
-  add(title: String, userId: Number): Observable<TaskBlockResponseDTO> {
+  add(title: String, userId: number): Observable<TaskBlockResponseDTO> {
 
     const data = {
       title,

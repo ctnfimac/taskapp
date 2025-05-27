@@ -16,7 +16,7 @@ export class TaskblockAdminComponent {
   title: string = '';
   successMessage: string = '';
   errorMessage: string = '';
-  userId: Number = 0;
+  userId: number = 0;
   
 
   constructor(

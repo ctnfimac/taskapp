@@ -9,6 +9,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AuthService } from '../../services/auth.service';
+import { TaskService } from '../../services/task.service';
+import { TaskResponseDTO } from '../../services/dtos/task';
 
 
 @Component({
@@ -25,30 +27,56 @@ import { AuthService } from '../../services/auth.service';
 })
 export class TaskAdminComponent {
   tarea: string = '';
-
-
-  onSubmit() {
-    console.log('Email:', this.tarea);
-    // Aquí agrego la lógica
-  }
+  titleBlock: string = '';
+  tasks: TaskResponseDTO[] = [];
+  userId?: number;
   title: string = '';
 
   constructor(
     private route: ActivatedRoute, 
     private authService: AuthService, 
+    private taskService: TaskService,
     private router: Router) {
       
     if (this.authService && !this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
     }
 
+    this.userId = authService.getCurrentUser()?.id;
   }
 
   ngOnInit() {
-    // pongo este titulo cuando redirijo de la pantalla en donde pongo
-    // el nombre del bloque de tareas
     this.route.queryParams.subscribe(params => {
       this.title = params['title'] || 'Título por defecto';
     });
+
+    if(this.userId != null) {
+      this.taskService.getTaksAndTitleBlock(this.userId)
+        .subscribe({
+          next: (response) => {
+            this.titleBlock = response.titleBlock;
+            this.tasks = response.listTasks;
+            console.log('Respuesta del servidor:', response);
+          },
+          error: (error) => {
+            console.error('Error al obtener las tareas:', error);
+          }
+        });
+    }
+  }
+
+  onSubmit() {
+    console.log('Email:', this.tarea);
+    // TODO: Aquí agrego la lógica
+  }
+
+  deleteTask(taskId: number) {
+    console.log('Eliminando tarea con ID:', taskId);
+    // TODO: Aquí implementaremos la lógica para eliminar la tarea
+  }
+
+  toggleDone(taskId: number) {
+    console.log('Cambiando estado de tarea con ID:', taskId);
+    // TODO: Aquí implementaremos la lógica para cambiar el estado de la tarea
   }
 }
