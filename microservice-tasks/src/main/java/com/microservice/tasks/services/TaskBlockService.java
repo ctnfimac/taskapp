@@ -14,4 +14,5 @@ public interface TaskBlockService {
     List<TaskBlockEntity> getAllByUserId(Long userId);
     void publisher(Long userId, TaskBlockEntity taskBlock);
     TaskBlockEntity findById(Long id);
+    TaskBlockEntity findByUserAndDoneFalse(Long userId);
 }

@@ -32,7 +32,7 @@ public interface TaskControllerSwagger {
 
     @Operation(
             summary = "Tareas del bloque de un usuario ",
-            description = "Endpoint para obtener todas las tareas de un usuario y de un bloque específico sin importar si está finalizado"
+            description = "Endpoint para obtener todas las tareas de un usuario y de un bloque que este activo"
     )
-    ResponseEntity<TaskAllResponseDTO> getTaskByUserAndBlock(@PathVariable Long blockId, @PathVariable Long userId);
+    ResponseEntity<TaskAllResponseDTO> getTaskByUserAndBlockActive(@PathVariable Long userId);
 }
