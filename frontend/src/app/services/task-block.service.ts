@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { TaskBlockResponseDTO } from './dtos/taskblock';
+import { HasBlockActiveResponseDTO, TaskBlockResponseDTO } from './dtos/taskblock';
 import { TaskCreateResponseDTO } from './dtos/task';
 
 @Injectable({
@@ -52,6 +52,14 @@ export class TaskBlockService {
       userId
     }
     return this.http.patch<null>(`${this.apiUrl}/${blockId}/finish`, data);
+  }
+
+
+    /**
+   * verifico si el usuario tiene un bloque de tareas activo
+   */
+  hasBlockActive(userId?: number): Observable<HasBlockActiveResponseDTO> {
+    return this.http.get<HasBlockActiveResponseDTO>(`${this.apiUrl}/has-block-active/${userId}`);
   }
 
 

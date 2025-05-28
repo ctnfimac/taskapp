@@ -44,9 +44,7 @@ export class TaskblockAdminComponent {
               
               // Redirigir después de 3 segundos
               setTimeout(() => {
-                //TODO: agrego/modifico el id del bloque de tareas a la sesión
                 this.router.navigate(['tasks']);
-                this.router.navigate(['tasks'], { queryParams: { title: response.title} });
               }, 3000);
             },
             error: (error) => {

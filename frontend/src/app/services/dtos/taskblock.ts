@@ -3,3 +3,8 @@ export interface TaskBlockResponseDTO {
     title: String,
     userId: Number;
 }
+
+
+export interface HasBlockActiveResponseDTO{
+    blockActive: boolean
+}

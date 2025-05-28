@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TaskBlockService } from '../../services/task-block.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
+    private taskBlockService: TaskBlockService,
     private router: Router
   ) {}
   
@@ -32,10 +34,7 @@ export class LoginComponent {
               this.email = '';
               this.password = '';
               
-              // Redirigir después de 3 segundos
-              setTimeout(() => {
-                this.router.navigate(['/taskblock/add']);
-              }, 3000);
+              this.userHasBlockActive(response.id)
             },
             error: (error) => {
               this.errorMessage = 'Credenciales incorrectas';
@@ -50,5 +49,21 @@ export class LoginComponent {
 
   campoVacio(){
     return this.email == '' || this.password == '';
+  }
+
+  userHasBlockActive(userId: number){
+    this.taskBlockService.hasBlockActive(userId)
+      .subscribe({
+        next: (response) => {
+          let url = response.blockActive == true ? 'tasks' : '/taskblock/add';
+          setTimeout(() => {     
+            this.router.navigate([url]);
+          }, 500);
+        },
+        error: (error) => {
+          console.log('Error en userHasBlockActive')
+        }
+    })
+
   }
 }
