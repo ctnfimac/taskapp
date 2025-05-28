@@ -10,13 +10,20 @@
                 Finalizar
             </button>
         </div>
-        <form (ngSubmit)="onSubmit()">
+        <form >
             <div class="form-group tasknew">
                 <div class="tasknew__input">
-                    <label for="tarea">Tarea nueva</label>
-                    <input type="email" id="tarea" [(ngModel)]="tarea" name="tarea" required>
+                    <label for="task">Tarea nueva</label>
+                    <input type="text" id="task" [(ngModel)]="taskTitle" name="task" required>
                 </div>
-                <mat-icon class="tasknew__add" aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+                <mat-icon 
+                    class="tasknew__add" 
+                    aria-hidden="false" 
+                    aria-label="Example home icon" 
+                    fontIcon="add"
+                    (click)="addTask()"
+                    >
+                </mat-icon>
             </div>
             <div class="form-group">
                 <ul class="list_container">

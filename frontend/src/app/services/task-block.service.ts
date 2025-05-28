@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthRequestDTO, AuthResponseDTO } from './dtos/auth';
 import { TaskBlockResponseDTO } from './dtos/taskblock';
+import { TaskCreateResponseDTO } from './dtos/task';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,6 @@ export class TaskBlockService {
    * Registro del usuario
    */
   add(title: String, userId: number): Observable<TaskBlockResponseDTO> {
-
     const data = {
       title,
       userId
@@ -24,6 +24,18 @@ export class TaskBlockService {
 
     return this.http.post<TaskBlockResponseDTO>(`${this.apiUrl}`,data);
   }
+
+  /**
+   * Agrego una tarea nueva al bloque de tareas
+   */
+  addTask(userId?: number, blockId?: number, title?: string): Observable<TaskCreateResponseDTO> {
+     const data = {
+        title,
+        userId
+    }
+    return this.http.post<TaskCreateResponseDTO>(`${this.apiUrl}/${blockId}/task`, data);
+  }
+
 
 
 }

@@ -23,3 +23,14 @@ export interface TaskResponseToogleDTO{
     done: boolean, 
     taskId: number 
 }
+
+// Para crear una tarea nueva
+export interface TaskCreateRequestDTO{
+    title: string,
+    userId: number
+}
+
+export interface TaskCreateResponseDTO{
+    id: number,
+    title: string
+}

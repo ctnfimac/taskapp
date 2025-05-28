@@ -11,6 +11,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { TaskResponseDTO } from '../../services/dtos/task';
+import { TaskBlockService } from '../../services/task-block.service';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { TaskResponseDTO } from '../../services/dtos/task';
   styleUrl: './task-admin.component.scss'
 })
 export class TaskAdminComponent {
-  tarea: string = '';
+  taskTitle: string = '';
   titleBlock: string = '';
   tasks: TaskResponseDTO[] = [];
   userId?: number;
@@ -37,6 +38,7 @@ export class TaskAdminComponent {
     private route: ActivatedRoute, 
     private authService: AuthService, 
     private taskService: TaskService,
+    private taskBlockService: TaskBlockService
     ) {
     this.userId = this.authService.getCurrentUser()?.id;
   }
@@ -62,9 +64,18 @@ export class TaskAdminComponent {
     }
   }
 
-  onSubmit() {
-    console.log('Email:', this.tarea);
-    // TODO: Aquí agrego la lógica
+  addTask(){
+    this.taskBlockService.addTask(this.userId, this.taskBlockId, this.taskTitle)
+      .subscribe({
+            next: (response) => {
+              console.info('Creando una nueva tarea.');
+              // Actualizar la lista de tareas después de cambiar el estado
+              if (this.userId) this.refreshTaskList(this.userId)
+            },
+            error: (error) => {
+              console.error('Error agregando una nueva tarea:');
+            }
+      })
   }
 
   deleteTask(taskId: number) {
@@ -73,11 +84,9 @@ export class TaskAdminComponent {
   }
 
   toggleDone(taskId: number) {
-    console.log('Cambiando estado de tarea con ID:' + taskId + ', userId: ' + this.userId + ', blockId: ' + this.taskBlockId);
     this.taskService.toogleDone(taskId, this.userId, this.taskBlockId)
       .subscribe({
           next: (response) => {
-            console.log('Respuesta del servidor:', response);
             // Actualizar la lista de tareas después de cambiar el estado
             if (this.userId) this.refreshTaskList(this.userId)
           },
