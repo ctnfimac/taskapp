@@ -102,3 +102,30 @@ button {
 button:hover {
   background-color: #4c5f93;
 }
+
+// Para el mensaje de felicitaciones
+.congratulations-message {
+  text-align: center;
+  padding: 2rem;
+  
+  h2 {
+    color: #cddaed;
+    font-size: 1.6em;
+    animation: fadeIn 0.5s ease-in;
+  }
+}
+
+.contragulations__image{
+  width: 100px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

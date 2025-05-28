@@ -32,13 +32,18 @@ export class TaskAdminComponent {
   tasks: TaskResponseDTO[] = [];
   userId?: number;
   taskBlockId?: number;
-  title: string = '';
+  // title: string = '';
+  // Propiedad para controlar el estado del botón de finalizar bloque de tareas
+  allTasksCompleted: boolean = false;
+
+  showCongratulations: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
     private authService: AuthService, 
     private taskService: TaskService,
-    private taskBlockService: TaskBlockService
+    private taskBlockService: TaskBlockService,
+    private router: Router
     ) {
     this.userId = this.authService.getCurrentUser()?.id;
   }
@@ -51,6 +56,7 @@ export class TaskAdminComponent {
             this.taskBlockId = response.idTaskBlock;
             this.titleBlock = response.titleBlock;
             this.tasks = response.listTasks;
+            this.checkAllTasksCompleted();
           },
           error: (error) => {
             console.error('Error al obtener las tareas:', error);
@@ -66,6 +72,7 @@ export class TaskAdminComponent {
               console.info('Creando una nueva tarea.');
               // Actualizar la lista de tareas después de cambiar el estado
               if (this.userId) this.refreshTaskList(this.userId)
+              this.taskTitle = '';
             },
             error: (error) => {
               console.error('Error agregando una nueva tarea:');
@@ -104,10 +111,35 @@ export class TaskAdminComponent {
         .subscribe({
           next: (response) => {
             this.tasks = response.listTasks;
+            this.checkAllTasksCompleted(); 
           },
           error: (error) => {
             console.error('Error al actualizar las tareas:', error);
           }
     });
+  }
+
+  finishBlock(){
+    this.taskBlockService.finishTaskBlock(this.taskBlockId, this.userId)
+      .subscribe({
+            next: (response) => {
+              console.info('Finalizando bloque de tarea');
+              this.showCongratulations = true; // Mostrar mensaje de felicitación
+        
+              // Redirigir después de 5 segundos
+              setTimeout(() => {
+                this.router.navigate(['/taskblock/add']);
+              }, 5000);
+              
+            },
+            error: (error) => {
+              console.error('Error Finalizando el bloque de tarea:');
+            }
+      })
+  }
+
+  // Método para verificar si todas las tareas están completadas
+  checkAllTasksCompleted(): void {
+    this.allTasksCompleted = this.tasks.length > 0 && this.tasks.every(task => task.done);
   }
 }

@@ -42,7 +42,17 @@ export class TaskBlockService {
   deleteTask(blockId?: number, taskId?: number): Observable<null> {
     return this.http.delete<null>(`${this.apiUrl}/${blockId}/task/${taskId}`);
   }
+  
 
+  /**
+   * Finalizar bloque de tareas
+   */
+  finishTaskBlock(blockId?: number, userId?: number): Observable<null> {
+    const data = {
+      userId
+    }
+    return this.http.patch<null>(`${this.apiUrl}/${blockId}/finish`, data);
+  }
 
 
 }

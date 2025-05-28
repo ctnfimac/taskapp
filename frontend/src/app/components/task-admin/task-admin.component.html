@@ -1,46 +1,55 @@
 <div class="container">
     <section class="generic-section">
-        <div class="header">
-            <h2 class="header__title">{{titleBlock}}</h2>
-            <button
-                class="header__button"
-                mat-raised-button
-                disabled="true"
-                matTooltip="Finalizar bloque de tarea">
-                Finalizar
-            </button>
+          <!-- Mensaje de felicitación -->
+        <div *ngIf="showCongratulations" class="congratulations-message">
+            <h2>¡¡Felicitaciones terminaste con todas tus tareas!!</h2>
+            <img class="contragulations__image" src="./../../../assets/images/logo_congratulations.png" >
         </div>
-        <form >
-            <div class="form-group tasknew">
-                <div class="tasknew__input">
-                    <label for="task">Tarea nueva</label>
-                    <input type="text" id="task" [(ngModel)]="taskTitle" name="task" required>
-                </div>
-                <mat-icon 
-                    class="tasknew__add" 
-                    aria-hidden="false" 
-                    aria-label="Example home icon" 
-                    fontIcon="add"
-                    (click)="addTask()"
-                    >
-                </mat-icon>
+        
+        <div *ngIf="!showCongratulations">
+            <div class="header">
+                <h2 class="header__title">{{titleBlock}}</h2>
+                <button
+                    class="header__button"
+                    mat-raised-button
+                    [disabled]="!allTasksCompleted"
+                    matTooltip="Finalizar bloque de tarea"
+                    (click)="finishBlock()">
+                    Finalizar
+                </button>
             </div>
-            <div class="form-group">
-                <ul class="list_container">
-                    <li class="list" *ngFor="let task of tasks">
-                        <div class="list__item list__item--task">
-                            <p>{{task.title}}</p>
-                            <input type="hidden" [value]="task.id">
-                        </div>
-                        <div class="list__item list__item--delete">
-                            <mat-icon class="task_delete" (click)="deleteTask(task.id)" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
-                        </div> 
-                        <div class="list__item list__item--check">
-                            <mat-checkbox class="example-margin" [checked]="task.done" (change)="toggleDone(task.id)"></mat-checkbox>
-                        </div> 
-                    </li>   
-                </ul>
-            </div>            
-        </form>
+            <form >
+                <div class="form-group tasknew">
+                    <div class="tasknew__input">
+                        <label for="task">Tarea nueva</label>
+                        <input type="text" id="task" [(ngModel)]="taskTitle" name="task" required>
+                    </div>
+                    <mat-icon 
+                        class="tasknew__add" 
+                        aria-hidden="false" 
+                        aria-label="Example home icon" 
+                        fontIcon="add"
+                        (click)="addTask()"
+                        >
+                    </mat-icon>
+                </div>
+                <div class="form-group">
+                    <ul class="list_container">
+                        <li class="list" *ngFor="let task of tasks">
+                            <div class="list__item list__item--task">
+                                <p>{{task.title}}</p>
+                                <input type="hidden" [value]="task.id">
+                            </div>
+                            <div class="list__item list__item--delete">
+                                <mat-icon class="task_delete" (click)="deleteTask(task.id)" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                            </div> 
+                            <div class="list__item list__item--check">
+                                <mat-checkbox class="example-margin" [checked]="task.done" (change)="toggleDone(task.id)"></mat-checkbox>
+                            </div> 
+                        </li>   
+                    </ul>
+                </div>            
+            </form>
+        </div>
     </section>
 </div>
