@@ -8,6 +8,7 @@
         font-size: 1.2em;
         text-align: left;
         color: #cddaed;
+        line-height: 1;
     }
 
     &__image{
@@ -62,6 +63,7 @@
       cursor: pointer;
       display: flex;
       justify-content: space-around;
+      align-items: center;
       p{
         text-align: left;
       }
@@ -69,11 +71,13 @@
 
     &--title{
         width: 70%;
+        font-size: .9em;
     }
 
     &--date{
         width: 30%;
         text-align: right;
+        font-size: .9em;
     }
   }
 

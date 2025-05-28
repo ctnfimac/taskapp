@@ -8,3 +8,17 @@ export interface TaskBlockResponseDTO {
 export interface HasBlockActiveResponseDTO{
     blockActive: boolean
 }
+
+
+
+// Para la lista de bloques de tarea
+export interface TaskBlockAllResponseDTO {
+    id: number;
+    title: string;
+    createdAt: string;
+}
+
+
+export interface ListTaskAllResponseDTO {
+    listTaskBlock: TaskBlockAllResponseDTO[];
+}
