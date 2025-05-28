@@ -44,11 +44,6 @@ export class TaskAdminComponent {
   }
 
   ngOnInit() {
-    
-    this.route.queryParams.subscribe(params => {
-      this.title = params['title'] || 'Título por defecto';
-    });
-
     if(this.userId != null) {
       this.taskService.getTaksAndTitleBlock(this.userId)
         .subscribe({
@@ -79,8 +74,16 @@ export class TaskAdminComponent {
   }
 
   deleteTask(taskId: number) {
-    console.log('Eliminando tarea con ID:', taskId);
-    // TODO: Aquí implementaremos la lógica para eliminar la tarea
+    this.taskBlockService.deleteTask(this.taskBlockId, taskId)
+      .subscribe({
+            next: (response) => {
+              console.info('Eliminando una tarea.');
+              if (this.userId) this.refreshTaskList(this.userId)
+            },
+            error: (error) => {
+              console.error('Error eliminando una tarea:');
+            }
+      })
   }
 
   toggleDone(taskId: number) {

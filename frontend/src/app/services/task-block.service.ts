@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthRequestDTO, AuthResponseDTO } from './dtos/auth';
 import { TaskBlockResponseDTO } from './dtos/taskblock';
 import { TaskCreateResponseDTO } from './dtos/task';
 
@@ -34,6 +33,14 @@ export class TaskBlockService {
         userId
     }
     return this.http.post<TaskCreateResponseDTO>(`${this.apiUrl}/${blockId}/task`, data);
+  }
+
+
+  /**
+   * Elimino una tarea de un bloque de tareas
+   */
+  deleteTask(blockId?: number, taskId?: number): Observable<null> {
+    return this.http.delete<null>(`${this.apiUrl}/${blockId}/task/${taskId}`);
   }
 
 
