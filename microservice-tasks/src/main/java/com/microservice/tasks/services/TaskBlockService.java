@@ -15,4 +15,5 @@ public interface TaskBlockService {
     void publisher(Long userId, TaskBlockEntity taskBlock);
     TaskBlockEntity findById(Long id);
     TaskBlockEntity findByUserAndDoneFalse(Long userId);
+    boolean hasBlockActive(Long userId);
 }

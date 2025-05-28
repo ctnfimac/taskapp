@@ -152,6 +152,13 @@ public class TaskBlockServiceImpl implements TaskBlockService{
                 .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_ACTIVE));
     }
 
+    @Override
+    public boolean hasBlockActive(Long userId) {
+        checkUserExistsById(userId);
+        // verifico si existe un bloque de tarea activo de un determinado usuario
+        return taskBlockRepository.existsByUserIdAndDoneFalse(userId);
+    }
+
 
     /**
      * verifico que el usuario existe en el microservicio de usuarios
