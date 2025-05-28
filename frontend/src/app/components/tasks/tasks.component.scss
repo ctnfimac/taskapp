@@ -7,6 +7,7 @@
         width: 80%;
         font-size: 1.2em;
         text-align: left;
+        line-height: 1;
         color: #cddaed;
     }
 
@@ -41,11 +42,6 @@
 }
 
 .list{
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-//   padding: 0;
-//   margin: 0;
   list-style: none;
   &__item{
     &--delete, &--check{

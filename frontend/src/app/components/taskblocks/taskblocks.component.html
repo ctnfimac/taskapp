@@ -7,7 +7,7 @@
         <div class="form-group">
             <ul class="list_container">
                 <li class="list" *ngFor="let block of taskBlocks">
-                    <div class="list__item list__item--task" (click)="detailTaskBlock(block.id)">
+                    <div class="list__item list__item--task" (click)="detailTaskBlock(block.id, block.title)">
                         <p class="list__item--title">{{ block.title }}</p>
                         <p class="list__item--date">{{ block.createdAt | date:'dd/MM/yyyy' }}</p>
                     </div>

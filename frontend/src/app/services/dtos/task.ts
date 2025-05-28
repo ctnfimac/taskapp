@@ -34,3 +34,10 @@ export interface TaskCreateResponseDTO{
     id: number,
     title: string
 }
+
+
+// para el response de las tareas
+export interface TaskResponseDTO{
+    id: number,
+    title: string
+}
