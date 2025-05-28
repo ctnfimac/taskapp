@@ -64,7 +64,7 @@ public class TaskBlockController implements TaskBlockControllerSwagger{
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksByUserId(@PathVariable("userId") Long userId){
+    public ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksBlockByUserId(@PathVariable("userId") Long userId){
         List<ResponseTaskBlockDTO> taskBlocks = taskBlockService.getAllByUserId(userId).stream()
                 .map(taskBlockMapper::taskBlockEntityToResponseTaskBlockDTO)
                 .toList();
