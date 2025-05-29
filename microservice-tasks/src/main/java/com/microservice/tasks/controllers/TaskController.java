@@ -1,11 +1,10 @@
 package com.microservice.tasks.controllers;
 
-import com.microservice.tasks.dto.task.TaskRequestCreate;
-import com.microservice.tasks.dto.task.TaskRequestUpdateDone;
-import com.microservice.tasks.dto.task.TaskResponseDTO;
-import com.microservice.tasks.dto.task.TaskResponseUpdateDone;
+import com.microservice.tasks.dto.task.*;
 import com.microservice.tasks.mappers.TaskMapper;
+import com.microservice.tasks.models.TaskBlockEntity;
 import com.microservice.tasks.models.TaskEntity;
+import com.microservice.tasks.services.TaskBlockService;
 import com.microservice.tasks.services.TaskService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,6 +24,8 @@ public class TaskController implements TaskControllerSwagger{
     @Autowired
     private TaskService taskService;
 
+    private TaskBlockService taskBlockService;
+
     private TaskMapper taskMapper;
 
 
@@ -36,10 +37,27 @@ public class TaskController implements TaskControllerSwagger{
     }
 
     @GetMapping("{blockId}/{userId}")
-    public ResponseEntity<List<TaskResponseDTO>> getTaskByUser(@PathVariable Long blockId, @PathVariable Long userId){
-        List<TaskResponseDTO> taskResponseDTOS = taskService.findByUserAndBLock(userId, blockId).stream()
+    public ResponseEntity<List<TaskResponseDTO>> getTaskByUserAndBlockFinished(@PathVariable Long blockId, @PathVariable Long userId){
+        List<TaskResponseDTO> taskResponseDTOS = taskService.findByUserAndBLockFinished(userId, blockId).stream()
                 .map(taskMapper::taskEntityToTaskResponseDTO)
                 .toList();
         return new ResponseEntity<>(taskResponseDTOS, HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/{userId}/all")
+    public ResponseEntity<TaskAllResponseDTO> getTaskByUserAndBlockActive(Long userId) {
+        List<TaskResponseDTO> taskResponseDTOS = taskService.findByUserAndBLockActive(userId).stream()
+                .map(taskMapper::taskEntityToTaskResponseDTO)
+                .toList();
+
+        TaskBlockEntity taskBlock = taskBlockService.findByUserAndDoneFalse(userId);
+
+        TaskAllResponseDTO taskAllResponse = new TaskAllResponseDTO();
+        taskAllResponse.setListTasks(taskResponseDTOS);
+        taskAllResponse.setTitleBlock(taskBlock.getTitle());
+        taskAllResponse.setIdTaskBlock(taskBlock.getId());
+
+        return new ResponseEntity<>(taskAllResponse, HttpStatus.OK);
     }
 }

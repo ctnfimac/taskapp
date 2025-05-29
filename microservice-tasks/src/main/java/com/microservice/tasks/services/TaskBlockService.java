@@ -13,4 +13,7 @@ public interface TaskBlockService {
     TaskBlockEntity setDoneTrue(Long blockId, RequestUpdateDoneTaskBlockDTO user);
     List<TaskBlockEntity> getAllByUserId(Long userId);
     void publisher(Long userId, TaskBlockEntity taskBlock);
+    TaskBlockEntity findById(Long id);
+    TaskBlockEntity findByUserAndDoneFalse(Long userId);
+    boolean hasBlockActive(Long userId);
 }

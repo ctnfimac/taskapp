@@ -49,5 +49,5 @@ public interface TaskBlockControllerSwagger {
             summary = "Obtener bloques de tarea",
             description = "Endpoint para obtener todos los bloques de tarea finalizados de un usuario"
     )
-    ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksByUserId(@PathVariable("userId") Long userId);
+    ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksBlockByUserId(@PathVariable("userId") Long userId);
 }

@@ -138,6 +138,28 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         );
     }
 
+    @Override
+    public TaskBlockEntity findById(Long id) {
+        return taskBlockRepository.findById(id)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_FOUND));
+    }
+
+    @Override
+    public TaskBlockEntity findByUserAndDoneFalse(Long userId) {
+        checkUserExistsById(userId);
+
+        return taskBlockRepository.findByUserIdAndDoneFalse(userId)
+                .orElseThrow(() -> new GlobalTaskException(APIError.TASK_BLOCK_NOT_ACTIVE));
+    }
+
+    @Override
+    public boolean hasBlockActive(Long userId) {
+        checkUserExistsById(userId);
+        // verifico si existe un bloque de tarea activo de un determinado usuario
+        return taskBlockRepository.existsByUserIdAndDoneFalse(userId);
+    }
+
+
     /**
      * verifico que el usuario existe en el microservicio de usuarios
      * @param taskBlockEntity TaskEntity

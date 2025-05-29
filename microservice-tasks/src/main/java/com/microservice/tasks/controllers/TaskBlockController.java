@@ -64,12 +64,21 @@ public class TaskBlockController implements TaskBlockControllerSwagger{
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksByUserId(@PathVariable("userId") Long userId){
+    public ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksBlockByUserId(@PathVariable("userId") Long userId){
         List<ResponseTaskBlockDTO> taskBlocks = taskBlockService.getAllByUserId(userId).stream()
                 .map(taskBlockMapper::taskBlockEntityToResponseTaskBlockDTO)
                 .toList();
 
         return new ResponseEntity<>(taskBlocks, HttpStatus.OK);
+    }
+
+    @GetMapping("/has-block-active/{userId}")
+    public ResponseEntity<HasBlockActiveResponseDTO> userHasBlockActive(@PathVariable("userId") Long userId){
+        boolean result = taskBlockService.hasBlockActive(userId);
+        HasBlockActiveResponseDTO response = new HasBlockActiveResponseDTO();
+        response.setBlockActive(result);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // endpoint de prueba para verificar la conexión con rabbit mq

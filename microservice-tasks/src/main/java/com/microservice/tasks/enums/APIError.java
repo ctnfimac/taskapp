@@ -8,6 +8,7 @@ public enum APIError {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
     TASK_BLOCK_NOT_FOUND(HttpStatus.NOT_FOUND, "Task block not found"),
     TASK_BLOCK_FINISHED(HttpStatus.NOT_FOUND, "finished Task block"),
+    TASK_BLOCK_NOT_ACTIVE(HttpStatus.NOT_FOUND, "User without active Task block"),
     USER_WITH_SAME_ID(HttpStatus.BAD_REQUEST, "There is a user with the same id"),
     EXCEED_NUMBER_OPERATIONS(HttpStatus.TOO_MANY_REQUESTS, "You exceed the number of operations"),
     TASK_BLOCK_ACTIVE(HttpStatus.BAD_REQUEST, "there is an active task block"),

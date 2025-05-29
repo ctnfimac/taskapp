@@ -1,0 +1,12 @@
+<div class="app-container">
+    <!-- Botón de cerrar sesión -->
+    <div class="logout-button" *ngIf="showLogoutButton">
+        <button mat-raised-button color="warn" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            Cerrar Sesión
+        </button>
+    </div>
+    
+    <!-- Contenido principal -->
+    <router-outlet></router-outlet>
+</div>

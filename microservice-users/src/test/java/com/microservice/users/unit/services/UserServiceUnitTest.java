@@ -158,7 +158,7 @@ public class UserServiceUnitTest {
         List<TaskDTO> expectedTasks = List.of(task1, task2);
 
         Mockito.when(userRepository.existsById(userId)).thenReturn(true);
-        Mockito.when(taskConnector.getTasksByUserAndBlock(blockId, userId)).thenReturn(expectedTasks);
+        Mockito.when(taskConnector.getTasksByUserAndBlockFinished(blockId, userId)).thenReturn(expectedTasks);
 
         // When
         List<TaskDTO> result = userService.getTaskByUserAndBlock(blockId, userId);
@@ -168,7 +168,7 @@ public class UserServiceUnitTest {
                 () -> assertEquals(expectedTasks, result),
                 () -> assertEquals(result.size(), 2),
                 () -> verify(userRepository).existsById(userId),
-                () -> verify(taskConnector).getTasksByUserAndBlock(blockId, userId)
+                () -> verify(taskConnector).getTasksByUserAndBlockFinished(blockId, userId)
         );
     }
 

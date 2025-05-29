@@ -1,0 +1,28 @@
+.app-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  // z-index: 1000;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #40345b;
+    transition: all 1s;
+    color: #ffe6ff;
+    
+    &:hover {
+      background-color: #6d406a;
+    }
+
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}
