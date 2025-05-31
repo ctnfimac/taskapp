@@ -128,6 +128,9 @@ usuario y contraseña esta en el docker-compose
 http://localhost:15672/
 ```
 
+## Diagrama de las base de datos de los microservicios
+![Image](https://github.com/user-attachments/assets/6d71e9c2-a9ca-491f-b05a-ab7b215a8f3c)
+
 ## Diagrama de flujo del uso de la aplicación
 El proyecto está pensado para trabajar sobre el backend, pero el diagrama lo realicé para
 poder analizar que endpoints desarrollar
