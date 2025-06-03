@@ -122,6 +122,12 @@ http://localhost:8091/docs
 ```
 http://localhost:8092/docs
 ```
+
+### Ejecutar pruebas unitarias
+```
+mvn test
+```
+
 ### Pantalla del sistema de mensajeria con rabbitmq
 usuario y contraseña esta en el docker-compose
 ```
@@ -144,12 +150,14 @@ poder analizar que endpoints desarrollar
 - Iniciar Sesión con usuario y contraseña.
 - Crear bloque de tareas
 - Finalizar bloque de tareas
-  - Enviar notificación por email
+- Enviar notificación por email
 - Crear Tarea
 - Obtener Tareas de un usuario y bloque finalizado
+- Obtener Tareas de un usuario y bloque espeficico sin importar el estado
 - Eliminar Tarea
 - Cambio de estado de la Tarea
 - Obtener bloques de tarea de un usuario
+
 
 
 (*) El pgadmin es un cliente de base de datos, que no es indispensable para el funcionamiento del proyecto pero sirve 
