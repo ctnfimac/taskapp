@@ -1,9 +1,9 @@
-version: '3.4'
+#version: '3.4'
 
 services:
   # Bases de datos a la cual me conectaré desde mi proyecto
   userdb:
-    image: postgres
+    image: postgres:15
     container_name: usermicroservice.db
     restart: always
     environment:
@@ -15,9 +15,11 @@ services:
     volumes:
       - ./postgres_data_users:/var/lib/postgresql/data/
       - ./init-scripts/userdb-init.sql:/docker-entrypoint-initdb.d/userdb-init.sql
+    networks:
+      - monitoring
 
   taskdb:
-    image: postgres
+    image: postgres:15
     container_name: taskmicroservice.db
     restart: always
     environment:
@@ -29,6 +31,8 @@ services:
     volumes:
       - ./postgres_data_tasks:/var/lib/postgresql/data/
       - ./init-scripts/taskdb-init.sql:/docker-entrypoint-initdb.d/taskdb-init.sql
+    networks:
+      - monitoring
 
   rabbitmq:
     image: rabbitmq:3.12-management
@@ -39,6 +43,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123
+    networks:
+      - monitoring
 
 
   # cliente de base de datos si es que no quiero usar la linea de comandos
@@ -52,6 +58,34 @@ services:
       - ./pgadmin_data:/var/lib/pgadmin
     ports:
       - "80:80"
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - monitoring
+
 
 volumes:
   postgres_data:
+  grafana-storage:
+
+networks:
+  monitoring:
+    driver: bridge

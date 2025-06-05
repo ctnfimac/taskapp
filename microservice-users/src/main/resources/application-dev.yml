@@ -21,3 +21,16 @@ http-connector:
           readTimeout: 3000
           writeTimeout: 3000
           connectionTimeout: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
