@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "task_block")
@@ -36,6 +38,9 @@ public class TaskBlockEntity {
 
     @Column(nullable = false, name = "user_id")
     private Long userId;
+
+    @OneToMany(mappedBy = "taskBlockEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskEntity> tasks = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
