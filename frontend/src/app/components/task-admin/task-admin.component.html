@@ -10,12 +10,21 @@
             <div class="header">
                 <h2 class="header__title">{{titleBlock}}</h2>
                 <button
-                    class="header__button"
+                    *ngIf="allTasksCompleted"
+                    class="header__button--finish"
                     mat-raised-button
-                    [disabled]="!allTasksCompleted"
                     matTooltip="Finalizar bloque de tarea"
                     (click)="finishBlock()">
-                    Finalizar
+                    Finalizar Bloque
+                </button>
+                <button 
+                    *ngIf="!allTasksCompleted" 
+                    matButton="elevated" 
+                    class="header__button--cancel" 
+                    mat-raised-button 
+                    (click)="openDialog('0ms', '0ms')"
+                    >
+                    Cancelar todo
                 </button>
             </div>
             <form >
