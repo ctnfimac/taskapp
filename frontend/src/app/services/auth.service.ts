@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { AuthRequestDTO, AuthResponseDTO } from './dtos/auth';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8091/api/v1/auth';
+  private apiUrl = environment.authBaseUrl;
+  //private apiUrl = 'http://127.0.0.1:8091/api/v1/auth';
   private readonly USER_KEY = 'currentUserTask';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
