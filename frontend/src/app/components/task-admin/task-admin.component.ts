@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
@@ -12,6 +12,16 @@ import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { TaskResponseDTO } from '../../services/dtos/task';
 import { TaskBlockService } from '../../services/task-block.service';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+
 
 
 @Component({
@@ -37,6 +47,8 @@ export class TaskAdminComponent {
   allTasksCompleted: boolean = false;
 
   showCongratulations: boolean = false;
+
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private route: ActivatedRoute, 
@@ -141,5 +153,71 @@ export class TaskAdminComponent {
   // Método para verificar si todas las tareas están completadas
   checkAllTasksCompleted(): void {
     this.allTasksCompleted = this.tasks.length > 0 && this.tasks.every(task => task.done);
+  }
+
+
+  /*cancelBlock(){
+    console.log('cancelando bloque')
+    this.taskBlockService.deleteTaskBlock(this.taskBlockId, this.userId)
+      .subscribe({
+            next: (response) => {
+              console.info('Eliminando bloque de tarea');
+              console.log(response)
+              setTimeout(() => {
+                this.router.navigate(['/taskblock/add']);
+              }, 5000);
+              //if (response.status) this.refreshTaskList(this.userId)
+            },
+            error: (error) => {
+              console.error('Error eliminando un bloque de tarea');
+            }
+      })
+  }*/
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.componentInstance.taskBlockId = this.taskBlockId;
+    dialogRef.componentInstance.userId = this.userId;
+  }
+
+}
+
+
+@Component({
+  standalone: true,
+  selector: 'dialog-animations-example-dialog',
+  templateUrl: 'dialog-animations-example-dialog.html',
+  imports: [MatDialogModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogAnimationsExampleDialog {
+  readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
+  userId?: number;
+  taskBlockId?: number;
+
+  constructor(
+    private taskBlockService: TaskBlockService,
+    private router: Router
+  ) {
+  }
+
+  cancelBlock() {
+    this.taskBlockService.deleteTaskBlock(this.taskBlockId, this.userId)
+      .subscribe({
+        next: (response) => {
+          console.info('Eliminando bloque de tarea');
+          this.dialogRef.close();
+          setTimeout(() => {
+            this.router.navigate(['/taskblock/add']);
+          }, 2000);
+        },
+        error: (error) => {
+          console.error('Error eliminando un bloque de tarea');
+        }
+      });
   }
 }

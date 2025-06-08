@@ -141,7 +141,7 @@ http://localhost:15672/
 El proyecto está pensado para trabajar sobre el backend, pero el diagrama lo realicé para
 poder analizar que endpoints desarrollar
 
-![Image](https://github.com/user-attachments/assets/5f40b768-4b39-4a72-a515-65b270e82099)
+![Image](https://github.com/user-attachments/assets/1b7be29f-5aab-47c1-8243-db38a2b187cf)
 
 
 
@@ -157,6 +157,7 @@ poder analizar que endpoints desarrollar
 - Eliminar Tarea
 - Cambio de estado de la Tarea
 - Obtener bloques de tarea de un usuario
+- Eliminar bloque de tarea activo junto con todas sus tareas relacionadas
 
 
 

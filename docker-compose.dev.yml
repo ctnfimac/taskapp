@@ -3,7 +3,7 @@ version: '3.4'
 services:
   # Bases de datos a la cual me conectaré desde mi proyecto
   userdb:
-    image: postgres
+    image: postgres:15
     container_name: usermicroservice.db
     restart: always
     environment:
@@ -17,7 +17,7 @@ services:
       - ./init-scripts/userdb-init.sql:/docker-entrypoint-initdb.d/userdb-init.sql
 
   taskdb:
-    image: postgres
+    image: postgres:15
     container_name: taskmicroservice.db
     restart: always
     environment:

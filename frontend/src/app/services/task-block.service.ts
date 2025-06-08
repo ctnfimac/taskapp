@@ -55,12 +55,19 @@ export class TaskBlockService {
   }
 
 
-    /**
+  /**
    * verifico si el usuario tiene un bloque de tareas activo
    */
   hasBlockActive(userId?: number): Observable<HasBlockActiveResponseDTO> {
     return this.http.get<HasBlockActiveResponseDTO>(`${this.apiUrl}/has-block-active/${userId}`);
   }
 
+
+  /**
+   * Elimino un bloque de tareas y sus tareas relacionadas
+   */
+  deleteTaskBlock(blockId?: number, userId?: number): Observable<null> {
+    return this.http.delete<null>(`${this.apiUrl}/${blockId}/${userId}`);
+  }
 
 }
