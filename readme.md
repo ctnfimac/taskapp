@@ -11,10 +11,10 @@ de notificaciones.
 - Postgresql
 - Junit
 - Maven
-- Docker
-- Docker Compose
+- Docker - Docker Compose
 - Git
 - RabbitMQ
+- Angular 18
 
 ## Arquitectura
 - Microservicios 
@@ -35,11 +35,15 @@ Contar con las siguientes herramientas antes de la instalación:
 - Docker Compose
 - Git
 
+En caso de usar el Frontend
+- node v20.18.0
+- npm 10.8.2
+
 
 ### Para el Entorno de Pruebas:
 1. Clonar el repositorio
 ```
-git https://github.com/ctnfimac/taskapp.git
+git clone https://github.com/ctnfimac/taskapp.git
 ```
 
 2. Me muevo hacia la carpeta del proyecto
@@ -52,7 +56,7 @@ cd taskapp
 mvn clean package -DskipTests
 ```
 
-4. Levanto los contenedores de las base de datos, los microservicios, RabbitMq y el cliente de postgresql pgadmin(*):
+4. Inicio los contenedores de las base de datos, los microservicios, RabbitMq y el cliente de postgresql pgadmin(*):
 ```
 docker-compose -f docker-compose.test.yml up --build -d
 ```
@@ -60,7 +64,7 @@ docker-compose -f docker-compose.test.yml up --build -d
 ### Para el entorno de desarrollo:
 1. Clonar el repositorio
 ```
-git https://github.com/ctnfimac/taskapp.git
+git clone https://github.com/ctnfimac/taskapp.git
 ```
 
 2. Me muevo hacia la carpeta del proyecto
@@ -68,25 +72,46 @@ git https://github.com/ctnfimac/taskapp.git
 cd taskapp
 ```
 
-3.  Levanto los contenedores de las base de datos y cliente pgadmin(*):
+3. Inicio los contenedores de las base de datos y cliente pgadmin(*):
 ```
 docker-compose -f docker-compose.dev.yml up --build -d
 ```
 
-4. Levanto el microservicio de usuarios, desde la carpeta microservice-users ejecutar:
+4. Inicio el microservicio de usuarios, *desde la carpeta microservice-users* ejecutar:
 ```
 mvn spring-boot:run
 ```
 
-5. Levanto el microservicio de tareas, desde la carpeta microservice-tasks ejecutar:
+5. Inicio el microservicio de tareas, *desde la carpeta microservice-tasks* ejecutar:
 ```
 mvn spring-boot:run
 ```
 
-6. Levanto el microservicio de notificaciones, desde la carpeta microservice-notification ejecutar:
+6. Inicio el microservicio de notificaciones, *desde la carpeta microservice-notification* ejecutar:
 ```
 mvn spring-boot:run
 ```
+
+### Para el FrontEnd
+Tener [Angular cli](https://angular.dev/installation) previamente instalado
+```
+npm install -g @angular/cli
+```
+1. Me muevo a la carpeta frontend
+```
+cd frontend
+```
+
+2. Instalo las dependencias
+```
+npm install
+```
+
+3. Inicio el proyecto Angular
+```
+ng serve
+```
+
 
 ### Documentacion, api de tareas:
 ```
@@ -97,17 +122,26 @@ http://localhost:8091/docs
 ```
 http://localhost:8092/docs
 ```
+
+### Ejecutar pruebas unitarias
+```
+mvn test
+```
+
 ### Pantalla del sistema de mensajeria con rabbitmq
 usuario y contraseña esta en el docker-compose
 ```
 http://localhost:15672/
 ```
 
+## Diagrama de las base de datos de los microservicios
+![Image](https://github.com/user-attachments/assets/6d71e9c2-a9ca-491f-b05a-ab7b215a8f3c)
+
 ## Diagrama de flujo del uso de la aplicación
-El proyecto por el momento está pensado para el desarrollo del backend, pero el diagrama lo realicé para
+El proyecto está pensado para trabajar sobre el backend, pero el diagrama lo realicé para
 poder analizar que endpoints desarrollar
 
-![Image](https://github.com/user-attachments/assets/5f40b768-4b39-4a72-a515-65b270e82099)
+![Image](https://github.com/user-attachments/assets/1b7be29f-5aab-47c1-8243-db38a2b187cf)
 
 
 
@@ -116,12 +150,15 @@ poder analizar que endpoints desarrollar
 - Iniciar Sesión con usuario y contraseña.
 - Crear bloque de tareas
 - Finalizar bloque de tareas
-  - Enviar notificación por email
+- Enviar notificación por email
 - Crear Tarea
 - Obtener Tareas de un usuario y bloque finalizado
+- Obtener Tareas de un usuario y bloque espeficico sin importar el estado
 - Eliminar Tarea
 - Cambio de estado de la Tarea
 - Obtener bloques de tarea de un usuario
+- Eliminar bloque de tarea activo junto con todas sus tareas relacionadas
+
 
 
 (*) El pgadmin es un cliente de base de datos, que no es indispensable para el funcionamiento del proyecto pero sirve 

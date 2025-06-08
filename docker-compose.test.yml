@@ -1,9 +1,9 @@
-version: '3.4'
+#version: '3.4'
 
 services:
   # Bases de datos a la cual me conectaré desde mi proyecto
   userdb:
-    image: postgres
+    image: postgres:15
     container_name: usermicroservice.db
     restart: always
     environment:
@@ -20,7 +20,7 @@ services:
 
 
   taskdb:
-    image: postgres
+    image: postgres:15
     container_name: taskmicroservice.db
     restart: always
     environment:
@@ -52,6 +52,7 @@ services:
   # backend de los microservicios
   userservice:
     image: taskapp/userservice:latest
+    container_name: usermicroservice.app
     build:
       context: ./microservice-users
       dockerfile: Dockerfile
@@ -69,6 +70,7 @@ services:
 
   taskservice:
     image: taskapp/taskservice:latest
+    container_name: taskmicroservice.app
     build:
       context: ./microservice-tasks
       dockerfile: Dockerfile
@@ -86,6 +88,7 @@ services:
 
   notificationservice:
     image: taskapp/notificationservice:latest
+    container_name: notificationmicroservice.app
     build:
       context: ./microservice-notification
       dockerfile: Dockerfile
@@ -99,7 +102,6 @@ services:
       SPRING_PROFILES_ACTIVE: test
     networks:
       - backend
-
 
 volumes:
   postgres_data:

@@ -50,4 +50,10 @@ public interface TaskBlockControllerSwagger {
             description = "Endpoint para obtener todos los bloques de tarea finalizados de un usuario"
     )
     ResponseEntity<List<ResponseTaskBlockDTO>> getAllTasksBlockByUserId(@PathVariable("userId") Long userId);
+
+    @Operation(
+            summary = "Cancelar un bloque de tarea",
+            description = "Endpoint para eliminar un bloque de tareas, no finalizado, y también a sus tareas relacionadas"
+    )
+    ResponseEntity<Void> cancelBlock(@PathVariable("blockId") Long blockId, @PathVariable("userId") Long userId);
 }
