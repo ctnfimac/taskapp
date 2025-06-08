@@ -40,7 +40,8 @@ En caso de usar el Frontend
 - npm 10.8.2
 
 
-### Para el Entorno de Pruebas:
+## Entorno de Pruebas:
+*Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación y el de rabbitMq. El frontend se instala aparte*
 1. Clonar el repositorio
 ```
 git clone https://github.com/ctnfimac/taskapp.git
@@ -56,12 +57,13 @@ cd taskapp
 mvn clean package -DskipTests
 ```
 
-4. Inicio los contenedores de las base de datos, los microservicios, RabbitMq y el cliente de postgresql pgadmin(*):
+4. Inicio los contenedores:
 ```
 docker-compose -f docker-compose.test.yml up --build -d
 ```
 
-### Para el entorno de desarrollo:
+## Entorno de desarrollo:
+*Para este entorno se levantan 2 contenedores de base de datos, el de rabbitMq y un cliente de base de datos. El frontend se instala aparte*
 1. Clonar el repositorio
 ```
 git clone https://github.com/ctnfimac/taskapp.git
@@ -92,8 +94,70 @@ mvn spring-boot:run
 mvn spring-boot:run
 ```
 
-### Para el FrontEnd
-Tener [Angular cli](https://angular.dev/installation) previamente instalado
+## Entorno de Pruebas Full:
+*Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación, el de rabbitMq y el frontend*
+1. Clonar el repositorio
+```
+git clone https://github.com/ctnfimac/taskapp.git
+```
+
+2. Me muevo hacia la carpeta del proyecto
+```
+cd taskapp
+```
+
+3. Genero el .jar de los microservicios
+```
+mvn clean package -DskipTests
+```
+
+4. Me posiciono en la carpeta del frontend
+```
+cd frontend
+```
+
+5. Instalo las dependencias del proyecto angular
+```
+npm install
+```
+
+6. Compilo el proyecto angular
+```
+ng build --configuration production
+```
+
+7. Regreso a la raiz del proyecto
+```
+cd ..
+```
+
+8. Inicio los contenedores:
+```
+docker-compose -f docker-compose.full.yml up --build -d
+```
+
+9. Ingreso a la aplicación
+```
+http://localhost/login
+```
+
+### Documentacion, api de tareas:
+```
+http://localhost:8091/docs
+```
+
+### Documentacion, api de usuarios:
+```
+http://localhost:8092/docs
+```
+
+### Ejecutar pruebas unitarias
+```
+mvn test
+```
+
+## Front-End
+*Pasos para instalar el proyecto angular en caso de necesitarlo para el ambiente de desarrollo o de pruebas. Tener [Angular cli](https://angular.dev/installation) previamente instalado*
 ```
 npm install -g @angular/cli
 ```
@@ -112,21 +176,12 @@ npm install
 ng serve
 ```
 
-
-### Documentacion, api de tareas:
+4. Ingreso a la aplicación
 ```
-http://localhost:8091/docs
-```
-
-### Documentacion, api de usuarios:
-```
-http://localhost:8092/docs
+http://localhost:4200
 ```
 
-### Ejecutar pruebas unitarias
-```
-mvn test
-```
+
 
 ### Pantalla del sistema de mensajeria con rabbitmq
 usuario y contraseña esta en el docker-compose
