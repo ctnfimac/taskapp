@@ -1,7 +1,4 @@
 @echo off
-echo Clonando repositorio...
-git clone https://github.com/ctnfimac/taskapp.git
-cd taskapp
 
 echo Generando JARs de los microservicios...
 mvn clean package -DskipTests
