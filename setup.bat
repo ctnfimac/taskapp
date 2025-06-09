@@ -1,18 +1,44 @@
+@REM instalacion en windows
 @echo off
+setlocal
 
-echo Generando JARs de los microservicios...
-mvn clean package -DskipTests
+echo ===============================
+echo 1. Generando JARs...
+echo ===============================
+call mvn clean package -DskipTests
+if %ERRORLEVEL% NEQ 0 (
+    echo Fallo mvn
+    pause
+    exit /b
+)
 
-echo Instalando dependencias del Frontend...
+echo ===============================
+echo 2. Instalando dependencias Angular...
+echo ===============================
 cd frontend
-npm install
+call npm install
+if %ERRORLEVEL% NEQ 0 (
+    echo Fallo npm install
+    pause
+    exit /b
+)
 
-echo Compilando frontend...
-ng build --configuration production
-
+echo ===============================
+echo 3. Compilando frontend...
+echo ===============================
+call ng build --configuration production
+if %ERRORLEVEL% NEQ 0 (
+    echo Fallo ng build
+    pause
+    exit /b
+)
 cd ..
 
-echo Levantando contenedores...
-docker-compose -f docker-compose.full.yml up --build -d
+echo ===============================
+echo 4. Levantando contenedores Docker...
+echo ===============================
+call docker-compose -f docker-compose.full.yml up --build -d
 
-echo Instalacion finalizada! Accede a http://localhost/login
+echo ===============================
+echo Instalacion completada.
+echo Accede a http://localhost/login
