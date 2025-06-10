@@ -106,39 +106,14 @@ git clone https://github.com/ctnfimac/taskapp.git
 cd taskapp
 ```
 
-3. Genero el .jar de los microservicios
+3. (Windows 10) Ejecuto el setup.bat desde la terminal, preferentemente como administrador
 ```
-mvn clean package -DskipTests
-```
-
-4. Me posiciono en la carpeta del frontend
-```
-cd frontend
+setup.bat
 ```
 
-5. Instalo las dependencias del proyecto angular
+3. (Linux) Ejecuto el makefile desde la terminal
 ```
-npm install
-```
-
-6. Compilo el proyecto angular
-```
-ng build --configuration production
-```
-
-7. Regreso a la raiz del proyecto
-```
-cd ..
-```
-
-8. Inicio los contenedores:
-```
-docker-compose -f docker-compose.full.yml up --build -d
-```
-
-9. Ingreso a la aplicación
-```
-http://localhost/login
+make all
 ```
 
 ### Documentacion, api de tareas:
@@ -157,10 +132,12 @@ mvn test
 ```
 
 ## Front-End
-*Pasos para instalar el proyecto angular en caso de necesitarlo para el ambiente de desarrollo o de pruebas. Tener [Angular cli](https://angular.dev/installation) previamente instalado*
+*Pasos para instalar el proyecto angular en caso de necesitarlo para el ambiente de desarrollo o de pruebas. 
+Tener [Angular cli](https://angular.dev/installation) previamente instalado*
 ```
 npm install -g @angular/cli
 ```
+
 1. Me muevo a la carpeta frontend
 ```
 cd frontend
