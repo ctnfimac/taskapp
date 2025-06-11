@@ -1,6 +1,6 @@
 # Frontend
-*Pasos para instalar el proyecto 
-Tener [Angular cli](https://angular.dev/installation) 18.2.9 previamente instalado*
+*Pasos para instalar el proyecto.*
+*Tener [Angular cli](https://angular.dev/installation) 18.2.9 previamente instalado*
 ```
 npm install -g @angular/cli
 ```
@@ -25,4 +25,5 @@ ng serve
 http://localhost:4200
 ```
 
+### Pantallas de la aplicación de tareas
 ![Image](https://github.com/user-attachments/assets/bd90535b-b395-4860-91b6-5ce2085ff778)
