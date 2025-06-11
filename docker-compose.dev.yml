@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   # Bases de datos a la cual me conectaré desde mi proyecto
   userdb:
