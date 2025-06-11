@@ -1,27 +1,36 @@
 <div class="container">
     <section class="generic-section">
-        <div class="header">
-            <h1 class="header__title">Registra <br><span>tú cuenta</span></h1>
-            <img class="header__image" src="./../../../assets/images/logo_register.png" >
+        <div *ngIf="showCongratulations" class="congratulations-message">
+            <h2>¡¡Felicitaciones, se registro tú cuenta correctamente!!</h2>
+            <img class="contragulations__image" src="./../../../assets/images/logo_register.png" >
         </div>
-        <form (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" [(ngModel)]="email" name="email" required>
+        <div *ngIf="!showCongratulations">
+            <div class="header">
+                <h1 class="header__title">Registra <br><span>tú cuenta</span></h1>
+                <img class="header__image" src="./../../../assets/images/logo_register.png" >
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" [(ngModel)]="password" name="password" required>
-            </div>
-            <button type="submit">Registrarse</button>
-        </form>
-        <a [routerLink]="['/login']" class="login-link">Iniciar Sesión</a>
+            <form (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" [(ngModel)]="email" #emailInput="ngModel" name="email" required>
+                    <div *ngIf="submitted && emailInput.invalid" class="error">
+                        El email es obligatorio
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" [(ngModel)]="password" #passwordInput="ngModel" name="password" required>
+                    <div *ngIf="submitted && passwordInput.invalid" class="error">
+                        La contraseña es obligatoria
+                    </div>
+                </div>
+                <button type="submit">Registrarse</button>
+            </form>
+            <a [routerLink]="['/login']" class="login-link">Si ya tienes cuenta Inicie Sesión</a>
 
-        <div *ngIf="successMessage" class="success-message" [innerHTML]="successMessage">
-            {{ successMessage }}
-        </div>
-        <div *ngIf="errorMessage" class="error-message">
-            {{ errorMessage }}
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
         </div>
     </section>
 </div>

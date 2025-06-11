@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,6 +17,8 @@ export class RegisterComponent {
   password: string = '';
   successMessage: string = '';
   errorMessage: string = '';
+  submitted = false;
+  showCongratulations: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -24,23 +26,29 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.authService.register(this.email, this.password)
-        .subscribe({
-          next: (response) => {
-            this.successMessage = '¡Registro exitoso!';
-            this.errorMessage = '';
-            this.email = '';
-            this.password = '';
-            // Redirigir después de 5 segundos
+    this.submitted = true;
+    if (this.email.trim() === '' || this.password.trim() === '') {
+      return;
+    }else{
+      this.authService.register(this.email, this.password)
+          .subscribe({
+            next: (response) => {
+              this.showCongratulations = true; // Mostrar mensaje de felicitación
+        
+              // Redirigir después de 5 segundos
               setTimeout(() => {
                 this.router.navigate(['/login']);
               }, 5000);
-          },
-          error: (error) => {
-            this.errorMessage = 'Error, intente Luego';
-            this.successMessage = '';
-          }
-        });
-  }
+            },
+            error: (error) => {
+              this.errorMessage = 'Error, intente Luego';
+              this.successMessage = '';
+              setTimeout(() => {
+                  this.errorMessage = '';
+              }, 5000)
+            }
+          });
+      }
+    }
 
 }

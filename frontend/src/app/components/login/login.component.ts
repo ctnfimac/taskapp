@@ -17,6 +17,7 @@ export class LoginComponent {
   password: string = '';
   successMessage: string = '';
   errorMessage: string = '';
+  submitted = false;
 
   constructor(
     private authService: AuthService,
@@ -25,32 +26,30 @@ export class LoginComponent {
   ) {}
   
   onSubmit() {
-    if(!this.campoVacio()){
+    this.submitted = true;
+    if (this.email.trim() === '' || this.password.trim() === '') {
+      return;
+    }else{
       this.authService.login(this.email, this.password)
           .subscribe({
             next: (response) => {
               this.successMessage = 'Inicio de sesión exitoso!';
               this.errorMessage = '';
-              this.email = '';
-              this.password = '';
+              //this.email = '';
+              //this.password = '';
               
               this.userHasBlockActive(response.id)
             },
             error: (error) => {
               this.errorMessage = 'Credenciales incorrectas';
               this.successMessage = '';
+              setTimeout(() => {
+                this.errorMessage = ''
+              }, 3000);
             }
           });
-    }else{
-      this.errorMessage = 'Complete todos los campos';
-      this.successMessage = '';
     }
   }
-
-  campoVacio(){
-    return this.email == '' || this.password == '';
-  }
-
   userHasBlockActive(userId: number){
     this.taskBlockService.hasBlockActive(userId)
       .subscribe({
@@ -58,7 +57,7 @@ export class LoginComponent {
           let url = response.blockActive == true ? 'tasks' : '/taskblock/add';
           setTimeout(() => {     
             this.router.navigate([url]);
-          }, 500);
+          }, 1500);
         },
         error: (error) => {
           console.log('Error en userHasBlockActive')
