@@ -81,6 +81,14 @@ public class TaskBlockController implements TaskBlockControllerSwagger{
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    @DeleteMapping("{blockId}/{userId}")
+    public ResponseEntity<Void> cancelBlock(Long blockId, Long userId) {
+        taskBlockService.deleteBlock(blockId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+
     // endpoint de prueba para verificar la conexión con rabbit mq
     // y el envio correcto de la información
     /*@GetMapping("/publish")

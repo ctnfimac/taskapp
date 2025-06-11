@@ -17,7 +17,7 @@ export class TaskblockAdminComponent {
   successMessage: string = '';
   errorMessage: string = '';
   userId: number = 0;
-  
+  submitted = false;
 
   constructor(
     private taskBlockservice: TaskBlockService,
@@ -34,14 +34,14 @@ export class TaskblockAdminComponent {
   }
 
   onSubmit() {
-    if(!this.campoVacio()){
+    this.submitted = true;
+    if (this.title.trim() === '') {
+      return;
+    }else{
       this.taskBlockservice.add(this.title, this.userId)
           .subscribe({
             next: (response) => {
               this.successMessage = 'Nuevo bloque de tarea creado!';
-              this.errorMessage = '';
-              this.title = '';
-              
               // Redirigir después de 3 segundos
               setTimeout(() => {
                 this.router.navigate(['tasks']);
@@ -50,11 +50,11 @@ export class TaskblockAdminComponent {
             error: (error) => {
               this.errorMessage = 'Error agregando un nuevo bloque de tarea';
               this.successMessage = '';
+              setTimeout(() => {
+                this.errorMessage = ''
+              }, 3000);
             }
           });
-    }else{
-      this.errorMessage = 'El título es obligatorio';
-      this.successMessage = '';
     }
   }
 

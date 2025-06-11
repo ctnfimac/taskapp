@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { HasBlockActiveResponseDTO, TaskBlockResponseDTO } from './dtos/taskblock';
 import { TaskCreateResponseDTO } from './dtos/task';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskBlockService {
-  private apiUrl = 'http://127.0.0.1:8092/api/v1/block';
+  private apiUrl = environment.taskBlockBaseUrl;
+  //private apiUrl = 'http://127.0.0.1:8092/api/v1/block';
 
   constructor(private http: HttpClient) { }
 
@@ -55,12 +57,19 @@ export class TaskBlockService {
   }
 
 
-    /**
+  /**
    * verifico si el usuario tiene un bloque de tareas activo
    */
   hasBlockActive(userId?: number): Observable<HasBlockActiveResponseDTO> {
     return this.http.get<HasBlockActiveResponseDTO>(`${this.apiUrl}/has-block-active/${userId}`);
   }
 
+
+  /**
+   * Elimino un bloque de tareas y sus tareas relacionadas
+   */
+  deleteTaskBlock(blockId?: number, userId?: number): Observable<null> {
+    return this.http.delete<null>(`${this.apiUrl}/${blockId}/${userId}`);
+  }
 
 }

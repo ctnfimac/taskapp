@@ -159,6 +159,13 @@ public class TaskBlockServiceImpl implements TaskBlockService{
         return taskBlockRepository.existsByUserIdAndDoneFalse(userId);
     }
 
+    @Override
+    public void deleteBlock(Long blockId, Long userId) {
+        TaskBlockEntity taskBlock = checkTaskBlockExistsAndDoneIsFalse(blockId);
+        checkUserExistsById(userId);
+        taskBlockRepository.delete(taskBlock);
+    }
+
 
     /**
      * verifico que el usuario existe en el microservicio de usuarios

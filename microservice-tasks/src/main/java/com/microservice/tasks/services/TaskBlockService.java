@@ -16,4 +16,5 @@ public interface TaskBlockService {
     TaskBlockEntity findById(Long id);
     TaskBlockEntity findByUserAndDoneFalse(Long userId);
     boolean hasBlockActive(Long userId);
+    void deleteBlock(Long blockId, Long userId);
 }

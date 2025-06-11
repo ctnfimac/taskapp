@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { TaskAllResponseDTO, TaskResponseDTO, TaskResponseToogleDTO } from './dtos/task';
 import { ListTaskAllResponseDTO, TaskBlockAllResponseDTO } from './dtos/taskblock';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://127.0.0.1:8091/api/v1/user';
+  private apiUrl = environment.userBaseUrl;
+  //private apiUrl = 'http://127.0.0.1:8091/api/v1/user';
 
   constructor(
     private http: HttpClient,

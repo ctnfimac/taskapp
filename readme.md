@@ -40,7 +40,8 @@ En caso de usar el Frontend
 - npm 10.8.2
 
 
-### Para el Entorno de Pruebas:
+## Entorno de Pruebas:
+*Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación y el de rabbitMq. El frontend se instala aparte*
 1. Clonar el repositorio
 ```
 git clone https://github.com/ctnfimac/taskapp.git
@@ -56,12 +57,13 @@ cd taskapp
 mvn clean package -DskipTests
 ```
 
-4. Inicio los contenedores de las base de datos, los microservicios, RabbitMq y el cliente de postgresql pgadmin(*):
+4. Inicio los contenedores:
 ```
 docker-compose -f docker-compose.test.yml up --build -d
 ```
 
-### Para el entorno de desarrollo:
+## Entorno de desarrollo:
+*Para este entorno se levantan 2 contenedores de base de datos, el de rabbitMq y un cliente de base de datos. El frontend se instala aparte*
 1. Clonar el repositorio
 ```
 git clone https://github.com/ctnfimac/taskapp.git
@@ -92,26 +94,27 @@ mvn spring-boot:run
 mvn spring-boot:run
 ```
 
-### Para el FrontEnd
-Tener [Angular cli](https://angular.dev/installation) previamente instalado
+## Entorno de Pruebas Full:
+*Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación, el de rabbitMq y el frontend*
+1. Clonar el repositorio
 ```
-npm install -g @angular/cli
-```
-1. Me muevo a la carpeta frontend
-```
-cd frontend
+git clone https://github.com/ctnfimac/taskapp.git
 ```
 
-2. Instalo las dependencias
+2. Me muevo hacia la carpeta del proyecto
 ```
-npm install
-```
-
-3. Inicio el proyecto Angular
-```
-ng serve
+cd taskapp
 ```
 
+3. (Windows 10) Ejecuto el setup.bat desde la terminal, preferentemente como administrador
+```
+setup.bat
+```
+
+3. (Linux) Ejecuto el makefile desde la terminal
+```
+make all
+```
 
 ### Documentacion, api de tareas:
 ```
@@ -128,6 +131,35 @@ http://localhost:8092/docs
 mvn test
 ```
 
+## Front-End
+*Pasos para instalar el proyecto angular en caso de necesitarlo para el ambiente de desarrollo o de pruebas. 
+Tener [Angular cli](https://angular.dev/installation) previamente instalado*
+```
+npm install -g @angular/cli
+```
+
+1. Me muevo a la carpeta frontend
+```
+cd frontend
+```
+
+2. Instalo las dependencias
+```
+npm install
+```
+
+3. Inicio el proyecto Angular
+```
+ng serve
+```
+
+4. Ingreso a la aplicación
+```
+http://localhost:4200
+```
+
+
+
 ### Pantalla del sistema de mensajeria con rabbitmq
 usuario y contraseña esta en el docker-compose
 ```
@@ -141,7 +173,7 @@ http://localhost:15672/
 El proyecto está pensado para trabajar sobre el backend, pero el diagrama lo realicé para
 poder analizar que endpoints desarrollar
 
-![Image](https://github.com/user-attachments/assets/5f40b768-4b39-4a72-a515-65b270e82099)
+![Image](https://github.com/user-attachments/assets/1b7be29f-5aab-47c1-8243-db38a2b187cf)
 
 
 
@@ -157,6 +189,7 @@ poder analizar que endpoints desarrollar
 - Eliminar Tarea
 - Cambio de estado de la Tarea
 - Obtener bloques de tarea de un usuario
+- Eliminar bloque de tarea activo junto con todas sus tareas relacionadas
 
 
 
