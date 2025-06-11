@@ -131,7 +131,7 @@ mvn test
 ```
 
 ## Front-End
-(Pasos para la instalación)[https://github.com/ctnfimac/taskapp/tree/main/frontend]
+[Pasos para la instalación](https://github.com/ctnfimac/taskapp/tree/main/frontend)
 
 
 ## Diagrama de las base de datos de los microservicios
