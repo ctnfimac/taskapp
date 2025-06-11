@@ -40,6 +40,29 @@ En caso de usar el Frontend
 - npm 10.8.2
 
 
+## Entorno de desarrollo:
+*Para este entorno se levantan 2 contenedores de base de datos, el de rabbitMq y un cliente de base de datos. El frontend se instala aparte.*
+1. Clonar el repositorio
+```
+git clone https://github.com/ctnfimac/taskapp.git
+```
+
+2. Me muevo hacia la carpeta del proyecto
+```
+cd taskapp
+```
+
+3. Inicio los contenedores de las base de datos y cliente pgadmin(*):
+```
+docker-compose -f docker-compose.dev.yml up --build -d
+```
+
+4. Para levantar los microservicios ingreso a cada una de las carpetas(microservice-users, microservice-tasks, microservice-notification) y ejecuto:
+```
+mvn spring-boot:run
+```
+
+
 ## Entorno de Pruebas:
 *Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación y el de rabbitMq. El frontend se instala aparte*
 1. Clonar el repositorio
@@ -62,37 +85,6 @@ mvn clean package -DskipTests
 docker-compose -f docker-compose.test.yml up --build -d
 ```
 
-## Entorno de desarrollo:
-*Para este entorno se levantan 2 contenedores de base de datos, el de rabbitMq y un cliente de base de datos. El frontend se instala aparte*
-1. Clonar el repositorio
-```
-git clone https://github.com/ctnfimac/taskapp.git
-```
-
-2. Me muevo hacia la carpeta del proyecto
-```
-cd taskapp
-```
-
-3. Inicio los contenedores de las base de datos y cliente pgadmin(*):
-```
-docker-compose -f docker-compose.dev.yml up --build -d
-```
-
-4. Inicio el microservicio de usuarios, *desde la carpeta microservice-users* ejecutar:
-```
-mvn spring-boot:run
-```
-
-5. Inicio el microservicio de tareas, *desde la carpeta microservice-tasks* ejecutar:
-```
-mvn spring-boot:run
-```
-
-6. Inicio el microservicio de notificaciones, *desde la carpeta microservice-notification* ejecutar:
-```
-mvn spring-boot:run
-```
 
 ## Entorno de Pruebas Full:
 *Para este entorno se levantan 2 contenedores de base de datos, 3 de aplicación, el de rabbitMq y el frontend*
@@ -126,45 +118,21 @@ http://localhost:8091/docs
 http://localhost:8092/docs
 ```
 
+### Pantalla del sistema de mensajeria con rabbitmq
+usuario y contraseña esta en el docker-compose
+```
+http://localhost:15672/
+```
+
+
 ### Ejecutar pruebas unitarias
 ```
 mvn test
 ```
 
 ## Front-End
-*Pasos para instalar el proyecto angular en caso de necesitarlo para el ambiente de desarrollo o de pruebas. 
-Tener [Angular cli](https://angular.dev/installation) previamente instalado*
-```
-npm install -g @angular/cli
-```
+(Pasos para la instalación)[https://github.com/ctnfimac/taskapp/tree/main/frontend]
 
-1. Me muevo a la carpeta frontend
-```
-cd frontend
-```
-
-2. Instalo las dependencias
-```
-npm install
-```
-
-3. Inicio el proyecto Angular
-```
-ng serve
-```
-
-4. Ingreso a la aplicación
-```
-http://localhost:4200
-```
-
-
-
-### Pantalla del sistema de mensajeria con rabbitmq
-usuario y contraseña esta en el docker-compose
-```
-http://localhost:15672/
-```
 
 ## Diagrama de las base de datos de los microservicios
 ![Image](https://github.com/user-attachments/assets/6d71e9c2-a9ca-491f-b05a-ab7b215a8f3c)
