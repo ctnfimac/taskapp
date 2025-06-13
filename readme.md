@@ -19,7 +19,7 @@ de notificaciones.
 ## Arquitectura
 - Microservicios 
 
-![Image](https://github.com/user-attachments/assets/34cd8a1b-3a5e-4515-9008-bd1c8b3039d6)
+![Image](https://github.com/user-attachments/assets/70ffb8d3-9fda-43d3-9d58-6d1f620f5f4d)
 
 ## IDE Utilizado
 IntelliJ IDEA pero también es compatible con otros IDEs como Eclipse o VS Code.
