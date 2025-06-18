@@ -31,7 +31,7 @@
                 <div class="form-group tasknew">
                     <div class="tasknew__input">
                         <label for="task">Tarea nueva</label>
-                        <input type="text" id="task" [(ngModel)]="taskTitle" name="task" required>
+                        <input type="text" id="task" [(ngModel)]="taskTitle"  #taskInput="ngModel" name="task" required>
                     </div>
                     <mat-icon 
                         class="tasknew__add" 
@@ -41,6 +41,9 @@
                         (click)="addTask()"
                         >
                     </mat-icon>
+                </div>
+                <div *ngIf="submitted && taskInput.invalid" class="error">
+                    La tarea es obligatoria
                 </div>
                 <div class="form-group">
                     <ul class="list_container">

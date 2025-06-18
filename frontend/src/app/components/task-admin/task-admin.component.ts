@@ -42,6 +42,8 @@ export class TaskAdminComponent {
   tasks: TaskResponseDTO[] = [];
   userId?: number;
   taskBlockId?: number;
+  submitted=false;
+  
   // title: string = '';
   // Propiedad para controlar el estado del botón de finalizar bloque de tareas
   allTasksCompleted: boolean = false;
@@ -78,18 +80,24 @@ export class TaskAdminComponent {
   }
 
   addTask(){
-    this.taskBlockService.addTask(this.userId, this.taskBlockId, this.taskTitle)
-      .subscribe({
-            next: (response) => {
-              console.info('Creando una nueva tarea.');
-              // Actualizar la lista de tareas después de cambiar el estado
-              if (this.userId) this.refreshTaskList(this.userId)
-              this.taskTitle = '';
-            },
-            error: (error) => {
-              console.error('Error agregando una nueva tarea:');
-            }
-      })
+    this.submitted = true;
+    if (this.taskTitle.trim() === '') {
+      return;
+    }else{
+      this.taskBlockService.addTask(this.userId, this.taskBlockId, this.taskTitle)
+        .subscribe({
+              next: (response) => {
+                console.info('Creando una nueva tarea.');
+                // Actualizar la lista de tareas después de cambiar el estado
+                if (this.userId) this.refreshTaskList(this.userId)
+                this.taskTitle = '';
+              this.submitted = false;
+              },
+              error: (error) => {
+                console.error('Error agregando una nueva tarea:');
+              }
+        })
+    }
   }
 
   deleteTask(taskId: number) {
