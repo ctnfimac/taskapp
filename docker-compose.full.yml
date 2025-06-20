@@ -15,7 +15,7 @@ services:
       - ./postgres_data_users:/var/lib/postgresql/data/
       - ./init-scripts/userdb-init.sql:/docker-entrypoint-initdb.d/userdb-init.sql
     networks:
-      - backend
+      - NetworkTaskApp
 
 
   taskdb:
@@ -32,7 +32,7 @@ services:
       - ./postgres_data_tasks:/var/lib/postgresql/data/
       - ./init-scripts/taskdb-init.sql:/docker-entrypoint-initdb.d/taskdb-init.sql
     networks:
-      - backend
+      - NetworkTaskApp
 
 
   rabbitmq:
@@ -45,8 +45,7 @@ services:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123
     networks:
-      - backend
-
+      - NetworkTaskApp
 
   # backend de los microservicios
   userservice:
@@ -64,7 +63,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: test
     networks:
-      - backend
+      - NetworkTaskApp
 
 
   taskservice:
@@ -83,7 +82,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: test
     networks:
-      - backend
+      - NetworkTaskApp
 
   notificationservice:
     image: taskapp/notificationservice:latest
@@ -100,7 +99,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: test
     networks:
-      - backend
+      - NetworkTaskApp
 
   frontend:
     image: taskapp/frontend:latest
@@ -115,11 +114,34 @@ services:
       - taskservice
       - notificationservice
     networks:
-      - backend
+      - NetworkTaskApp
+
+  # para el monitoreo de la aplicación
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - NetworkTaskApp
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - NetworkTaskApp
 
 
 volumes:
   postgres_data:
+  grafana-storage:
 
 networks:
-  backend:
+  NetworkTaskApp:
+    driver: bridge

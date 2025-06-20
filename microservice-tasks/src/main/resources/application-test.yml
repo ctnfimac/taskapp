@@ -33,3 +33,17 @@ logging:
   level:
     org.springframework.web: DEBUG
     io.github.resilience4j: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
